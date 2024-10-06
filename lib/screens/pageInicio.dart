@@ -39,7 +39,11 @@ Container containerOne(context) {
                   cambiarPantalla("registrarse", context);
                 }),
                 const SizedBox(height: 10),
-                boton("iniciar sesión", () {})
+                boton("iniciar sesión", () {}),
+                const SizedBox(height: 10),
+                boton("data", () {
+                  cambiarPantalla("data", context);
+                })
               ],
             ),
           )

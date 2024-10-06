@@ -1,14 +1,128 @@
 import 'package:flutter/material.dart';
+import 'package:patitas/adaptadores/adaptador.dart';
+import 'package:patitas/adaptadores/fecha.dart';
+import 'package:patitas/adaptadores/usuario.dart';
 import 'package:patitas/screens/routes/routes.dart';
+import 'package:patitas/screens/widgets/botones.dart';
 import 'package:patitas/screens/widgets/colores.dart';
 
-class PageRegistrar extends StatelessWidget {
+class PageRegistrar extends StatefulWidget {
   const PageRegistrar({super.key});
 
   @override
+  State<PageRegistrar> createState() => _PageRegistrarState();
+}
+
+class _PageRegistrarState extends State<PageRegistrar> {
+  bool generoHombre = false;
+  bool generoMujer = false;
+  TextEditingController nombreController = TextEditingController();
+  TextEditingController apellidoController = TextEditingController();
+  TextEditingController telefonoEmailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController diaController = TextEditingController();
+  TextEditingController mesController = TextEditingController();
+  TextEditingController yearController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController nombreController = TextEditingController();
-    TextEditingController telefonoEmailController = TextEditingController();
+    TextEditingController generoOtroController = TextEditingController();
+
+    void guardarDatos() {
+      bool checkboxClicked = false;
+
+      if (nombreController.text.isEmpty ||
+          apellidoController.text.isEmpty ||
+          telefonoEmailController.text.isEmpty ||
+          passwordController.text.isEmpty ||
+          diaController.text.isEmpty ||
+          mesController.text.isEmpty ||
+          yearController.text.isEmpty) {
+        print("FALTAN DATOS");
+        return;
+      }
+
+      if (!generoHombre && !generoMujer && generoOtroController.text.isEmpty) {
+        print("SELECCIONE TU GENERO");
+        return;
+      }
+
+      String generoUsuario = "";
+
+      if (generoHombre) {
+        generoUsuario = "Masculino";
+      } else if (generoMujer) {
+        generoUsuario = "Femenino";
+      } else {
+        generoUsuario = generoOtroController.text;
+      }
+
+      Fecha fechaUser = Fecha(
+          dia: int.parse(diaController.text),
+          mes: int.parse(mesController.text),
+          year: int.parse(yearController.text));
+
+      Usuario newUsuario = Usuario(
+          nombre: nombreController.text,
+          apellido: apellidoController.text,
+          telefonoOEmail: telefonoEmailController.text,
+          password: passwordController.text,
+          fechaNacimiento: fechaUser,
+          genero: generoUsuario);
+
+      adaptador.guardaDatosMemoria(newUsuario);
+    }
+
+    void clickCheckbox(newValor, String genero) {
+      setState(() {
+        if (genero == "m") {
+          generoHombre = newValor;
+          generoMujer = false;
+        } else {
+          generoHombre = false;
+          generoMujer = newValor;
+        }
+      });
+    }
+
+    Widget myTextfield(String text, control, bool rCheck) {
+      return TextField(
+        controller: control,
+        onTap: () {
+          if (rCheck) {
+            setState(() {
+              generoHombre = false;
+              generoMujer = false;
+            });
+          }
+        },
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          filled: true,
+          fillColor: Colors.white,
+          hintText: text.toUpperCase(),
+        ),
+      );
+    }
+
+    Widget myCheckBox(String text, valor, funcion, bool border, String genero) {
+      return Container(
+        decoration: BoxDecoration(
+            border: border == true ? Border.all(color: Colors.black) : null,
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white),
+        width: 200,
+        child: CheckboxListTile(
+          title: Text(text),
+          value: valor,
+          onChanged: (nuevoValor) {
+            clickCheckbox(nuevoValor, genero);
+          },
+          activeColor: Colors.black,
+          checkColor: Colors.white,
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: fondoColor,
@@ -21,7 +135,7 @@ class PageRegistrar extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("REGISTRARSE"),
+            const Text("REGISTRARSE"),
             Image.asset(
               "assets/imagenes/logo.png",
               width: 40,
@@ -33,28 +147,27 @@ class PageRegistrar extends StatelessWidget {
         padding:
             const EdgeInsets.only(bottom: 10, left: 100, right: 100, top: 10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               children: [
-                Expanded(child: myTextfield("Nombre", nombreController)),
+                Expanded(child: myTextfield("Nombre", nombreController, false)),
                 const SizedBox(width: 10),
-                Expanded(child: myTextfield("Apellido", nombreController)),
+                Expanded(
+                    child: myTextfield("Apellido", apellidoController, false)),
               ],
             ),
             const SizedBox(height: 10),
             myTextfield("numero de celular o correo electronico",
-                telefonoEmailController),
+                telefonoEmailController, false),
             const SizedBox(height: 10),
-            myTextfield("contraseña nueva", telefonoEmailController),
-            const SizedBox(height: 20),
-            const Text("FECHA DE NACIMIENTO"),
+            myTextfield("contraseña nueva", passwordController, false),
+            const SizedBox(height: 10),
             Row(
               children: [
-                Expanded(child: myTextfield("DIA", nombreController)),
-                const SizedBox(width: 10),
-                Expanded(child: myTextfield("MES", nombreController)),
-                const SizedBox(width: 10),
-                Expanded(child: myTextfield("AÑO", nombreController)),
+                Expanded(child: myTextfield("dia", diaController, false)),
+                Expanded(child: myTextfield("mes", mesController, false)),
+                Expanded(child: myTextfield("año", yearController, false)),
               ],
             ),
             const SizedBox(height: 20),
@@ -63,13 +176,19 @@ class PageRegistrar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                myCheckBox("Hombre", false, () {}),
+                myCheckBox("Hombre", generoHombre, () {}, true, "m"),
                 const SizedBox(width: 10),
-                myCheckBox("Mujer", false, () {}),
+                myCheckBox("Mujer", generoMujer, () {}, true, "f"),
                 const SizedBox(width: 10),
-                myExpansionTile("OTRAS")
+                SizedBox(
+                    width: 200,
+                    child: myTextfield("Otras", generoOtroController, true))
               ],
             ),
+            const SizedBox(height: 60),
+            boton("registrarse", () {
+              guardarDatos();
+            })
           ],
         ),
       ),
@@ -77,55 +196,8 @@ class PageRegistrar extends StatelessWidget {
   }
 }
 
-Widget myTextfield(String text, control) {
-  return TextField(
-    controller: control,
-    decoration: InputDecoration(
-      border: const OutlineInputBorder(),
-      filled: true,
-      fillColor: Colors.white,
-      hintText: text,
-    ),
-  );
-}
-
 Widget myButton(String text, control) {
   return ElevatedButton(onPressed: () {}, child: Text(text));
-}
-
-Widget myCheckBox(String text, valor, funcion) {
-  return Container(
-    decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white),
-    width: 200,
-    child: CheckboxListTile(
-      title: Text(text),
-      value: valor,
-      onChanged: (bool? nuevoValor) {
-        funcion();
-      },
-      activeColor: Colors.black,
-      checkColor: Colors.red,
-    ),
-  );
-}
-
-Widget myExpansionTile(String text) {
-  return SizedBox(
-    width: 200,
-    child: ExpansionTile(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      backgroundColor: Colors.white,
-      title: Text(text),
-      children: [
-        itemsOptions("coso"),
-        itemsOptions("coso"),
-        itemsOptions("coso"),
-      ],
-    ),
-  );
 }
 
 Widget itemsOptions(String text) {
