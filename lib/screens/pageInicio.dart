@@ -39,7 +39,9 @@ Container containerOne(context) {
                   cambiarPantalla("registrarse", context);
                 }),
                 const SizedBox(height: 10),
-                boton("iniciar sesión", () {}),
+                boton("iniciar sesión", () {
+                  cambiarPantalla("login", context);
+                }),
                 const SizedBox(height: 10),
                 boton("data", () {
                   cambiarPantalla("data", context);
@@ -90,13 +92,14 @@ Widget info() {
         alignment: Alignment.bottomCenter,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-            color: infoFondoColor, borderRadius: BorderRadius.circular(5)),
+            color: containerColor, borderRadius: BorderRadius.circular(5)),
         width: 500,
         child: const Column(
           children: [
             Text(
               "Patitas Callejeras se formó el 9 de marzo de 2023 en respuesta al maltrato y abandono de animales en las calles, así como a la tenencia irresponsable de mascotas. Durante nuestro primer año, realizamos campañas de adopción, esterilización y concientización sobre tenencia responsable, además de recibir donaciones. El objetivo de Patitas Callejeras Valle de Uco es sensibilizar y fomentar el respeto hacia los animales y la vida en general, buscando erradicar la crueldad hacia los animales.",
               style: TextStyle(
+                fontFamily: "nunito",
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),

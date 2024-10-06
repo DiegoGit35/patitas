@@ -145,51 +145,61 @@ class _PageRegistrarState extends State<PageRegistrar> {
       ),
       body: Padding(
         padding:
-            const EdgeInsets.only(bottom: 10, left: 100, right: 100, top: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Expanded(child: myTextfield("Nombre", nombreController, false)),
-                const SizedBox(width: 10),
-                Expanded(
-                    child: myTextfield("Apellido", apellidoController, false)),
-              ],
-            ),
-            const SizedBox(height: 10),
-            myTextfield("numero de celular o correo electronico",
-                telefonoEmailController, false),
-            const SizedBox(height: 10),
-            myTextfield("contraseña nueva", passwordController, false),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(child: myTextfield("dia", diaController, false)),
-                Expanded(child: myTextfield("mes", mesController, false)),
-                Expanded(child: myTextfield("año", yearController, false)),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Text("SEXO"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                myCheckBox("Hombre", generoHombre, () {}, true, "m"),
-                const SizedBox(width: 10),
-                myCheckBox("Mujer", generoMujer, () {}, true, "f"),
-                const SizedBox(width: 10),
-                SizedBox(
-                    width: 200,
-                    child: myTextfield("Otras", generoOtroController, true))
-              ],
-            ),
-            const SizedBox(height: 60),
-            boton("registrarse", () {
-              guardarDatos();
-            })
-          ],
+            const EdgeInsets.only(left: 50, right: 50, top: 30, bottom: 30),
+        child: Container(
+          padding: EdgeInsets.all(50),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20), color: containerColor),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                      child: myTextfield("Nombre", nombreController, false)),
+                  const SizedBox(width: 10),
+                  Expanded(
+                      child:
+                          myTextfield("Apellido", apellidoController, false)),
+                ],
+              ),
+              const SizedBox(height: 10),
+              myTextfield("numero de celular o correo electronico",
+                  telefonoEmailController, false),
+              const SizedBox(height: 10),
+              myTextfield("contraseña", passwordController, false),
+              const SizedBox(height: 10),
+              Text("Fecha de nacimiento"),
+              Row(
+                children: [
+                  Expanded(child: myTextfield("dia", diaController, false)),
+                  const SizedBox(width: 10),
+                  Expanded(child: myTextfield("mes", mesController, false)),
+                  const SizedBox(width: 10),
+                  Expanded(child: myTextfield("año", yearController, false)),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Text("SEXO"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  myCheckBox("Hombre", generoHombre, () {}, true, "m"),
+                  const SizedBox(width: 10),
+                  myCheckBox("Mujer", generoMujer, () {}, true, "f"),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                      width: 200,
+                      child: myTextfield("Otras", generoOtroController, true))
+                ],
+              ),
+              const SizedBox(height: 60),
+              boton("registrarse", () {
+                guardarDatos();
+              })
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:patitas/screens/pageData.dart';
 import 'package:patitas/screens/pageInicio.dart';
+import 'package:patitas/screens/pageInicioSesion.dart';
 import 'package:patitas/screens/pageRegistrar.dart';
 
 GoRouter router = GoRouter(
@@ -18,6 +19,10 @@ GoRouter router = GoRouter(
       path: '/data',
       builder: (context, state) => const Pagedata(),
     ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const Pageiniciosesion(),
+    ),
   ],
 );
 
@@ -27,6 +32,8 @@ void cambiarPantalla(String route, context) {
       GoRouter.of(context).go("/");
     case "registrarse":
       GoRouter.of(context).go("/registrarse");
+    case "login":
+      GoRouter.of(context).go("/login");
     case "data":
       GoRouter.of(context).go("/data");
     default:
