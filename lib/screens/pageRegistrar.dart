@@ -29,8 +29,6 @@ class _PageRegistrarState extends State<PageRegistrar> {
     TextEditingController generoOtroController = TextEditingController();
 
     void guardarDatos() {
-      bool checkboxClicked = false;
-
       if (nombreController.text.isEmpty ||
           apellidoController.text.isEmpty ||
           telefonoEmailController.text.isEmpty ||
@@ -145,11 +143,16 @@ class _PageRegistrarState extends State<PageRegistrar> {
       ),
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 50, right: 50, top: 30, bottom: 30),
+            const EdgeInsets.only(left: 100, right: 100, top: 30, bottom: 30),
         child: Container(
-          padding: EdgeInsets.all(50),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: containerColor),
+          padding: const EdgeInsets.all(50),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+                color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: Offset(0, 0))
+          ], borderRadius: BorderRadius.circular(20), color: containerColor),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -169,7 +172,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
               const SizedBox(height: 10),
               myTextfield("contraseña", passwordController, false),
               const SizedBox(height: 10),
-              Text("Fecha de nacimiento"),
+              const Text("Fecha de nacimiento"),
               Row(
                 children: [
                   Expanded(child: myTextfield("dia", diaController, false)),
@@ -204,12 +207,4 @@ class _PageRegistrarState extends State<PageRegistrar> {
       ),
     );
   }
-}
-
-Widget myButton(String text, control) {
-  return ElevatedButton(onPressed: () {}, child: Text(text));
-}
-
-Widget itemsOptions(String text) {
-  return ElevatedButton(onPressed: () {}, child: Text(text));
 }

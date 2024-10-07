@@ -65,8 +65,13 @@ class Pageiniciosesion extends StatelessWidget {
       return Container(
         height: 400,
         padding: EdgeInsets.all(50),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(40), color: containerColor),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 0))
+        ], borderRadius: BorderRadius.circular(40), color: containerColor),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
