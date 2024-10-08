@@ -1,4 +1,4 @@
-import 'package:patitas/adaptadores/fecha.dart';
+import 'package:patitas/entidades/fecha.dart';
 
 class Usuario {
   String nombre;

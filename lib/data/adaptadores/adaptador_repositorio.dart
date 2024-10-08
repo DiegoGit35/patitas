@@ -1,6 +1,6 @@
-import 'package:patitas/adaptadores/fecha.dart';
-import 'package:patitas/adaptadores/repositorio.dart';
-import 'package:patitas/adaptadores/usuario.dart';
+import 'package:patitas/entidades/fecha.dart';
+import 'package:patitas/data/repositorio/repositorio.dart';
+import 'package:patitas/entidades/usuario.dart';
 
 class AdaptadorRepositorio extends RepositorioUsuarios {
   List<Usuario> listaUsuario = [
