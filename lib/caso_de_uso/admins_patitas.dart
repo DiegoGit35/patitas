@@ -10,4 +10,8 @@ class AdminsPatitas {
   void iniciarSesion(context) {
     cambiarPantalla("menu", context);
   }
+
+  void adoptar() {}
+
+  void transitar() {}
 }
