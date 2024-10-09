@@ -1,0 +1,4 @@
+enum TipoDeUsuario {
+  administrador,
+  normal,
+}
