@@ -43,7 +43,9 @@ Container containerTwo(context) {
                   cambiarPantalla("adopcion", context);
                 }),
                 const SizedBox(height: 10),
-                boton("transito", () {})
+                boton("transito", () {
+                  cambiarPantalla("transitar", context);
+                })
               ],
             ),
           )

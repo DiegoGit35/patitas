@@ -6,8 +6,8 @@ import 'package:patitas/screens/widgets/botones.dart';
 import 'package:patitas/screens/widgets/colores.dart';
 import 'package:patitas/screens/widgets/imagenes.dart';
 
-class Pageadopcion extends StatelessWidget {
-  const Pageadopcion({super.key});
+class Pagetransitar extends StatelessWidget {
+  const Pagetransitar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,9 @@ class Pageadopcion extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            texto("quiero y necesito una familia", 40, Colors.black, true),
+            texto("necesito un hogar temporal", 40, Colors.black, true),
             texto(
-                "Buscamos familias responsables que nos cuiden, nos den amor y un techito para resguardarnos.💖",
+                "Buscamos un hogar temporal donde nos puedan cuidar hasta conseguir un hogar permanente.💖",
                 25,
                 Colors.black,
                 false),
