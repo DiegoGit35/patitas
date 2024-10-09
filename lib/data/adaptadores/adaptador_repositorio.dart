@@ -7,8 +7,8 @@ class AdaptadorRepositorio extends RepositorioUsuarios {
     Usuario(
         nombre: "a",
         apellido: "a",
-        telefonoOEmail: "123",
-        password: "123",
+        telefonoOEmail: "admin",
+        password: "admin",
         fechaNacimiento: Fecha(dia: 2, mes: 2, year: 2),
         genero: "mate")
   ];

@@ -5,6 +5,7 @@ import 'package:patitas/entidades/usuario.dart';
 import 'package:patitas/screens/routes/routes.dart';
 import 'package:patitas/screens/widgets/botones.dart';
 import 'package:patitas/screens/widgets/colores.dart';
+import 'package:patitas/screens/widgets/imagenes.dart';
 
 class PageRegistrar extends StatefulWidget {
   const PageRegistrar({super.key});
@@ -135,7 +136,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
           children: [
             const Text("REGISTRARSE"),
             Image.asset(
-              "assets/imagenes/logo.png",
+              logoImg,
               width: 40,
             )
           ],

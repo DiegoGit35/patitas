@@ -6,8 +6,8 @@ SizedBox boton(String nombre, Function funcion) {
     height: 50,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 163, 138, 104),
-          overlayColor: const Color.fromARGB(255, 255, 0, 0),
+          backgroundColor: const Color(0xFF7CB8C0),
+          overlayColor: const Color.fromARGB(255, 255, 255, 255),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
       onPressed: () {
@@ -15,7 +15,7 @@ SizedBox boton(String nombre, Function funcion) {
       },
       child: Text(
         nombre.toUpperCase(),
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
       ),
     ),
   );

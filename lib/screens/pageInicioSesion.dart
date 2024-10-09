@@ -4,6 +4,7 @@ import 'package:patitas/entidades/usuario.dart';
 import 'package:patitas/screens/routes/routes.dart';
 import 'package:patitas/screens/widgets/botones.dart';
 import 'package:patitas/screens/widgets/colores.dart';
+import 'package:patitas/screens/widgets/imagenes.dart';
 
 class Pageiniciosesion extends StatelessWidget {
   const Pageiniciosesion({super.key});
@@ -43,7 +44,7 @@ class Pageiniciosesion extends StatelessWidget {
         return;
       }
 
-      print("TODO CORRECTO, SESSION INICIADA");
+      adminApp.iniciarSesion(context);
     }
 
     SizedBox mytexfield(String texto, control) {
@@ -92,7 +93,7 @@ class Pageiniciosesion extends StatelessWidget {
       return Container(
           padding: EdgeInsets.all(50),
           child: Image.asset(
-            "assets/imagenes/logo.png",
+            logoImg,
             width: 200,
           ));
     }
@@ -110,7 +111,7 @@ class Pageiniciosesion extends StatelessWidget {
           children: [
             const Text("INICIAR SESION"),
             Image.asset(
-              "assets/imagenes/logo.png",
+              logoImg,
               width: 40,
             )
           ],
