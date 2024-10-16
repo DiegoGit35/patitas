@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/entidades/fecha.dart';
 import 'package:patitas/entidades/usuario.dart';
@@ -18,6 +19,7 @@ class PageRegistrar extends StatefulWidget {
 class _PageRegistrarState extends State<PageRegistrar> {
   bool generoHombre = false;
   bool generoMujer = false;
+  DateTime fechaSeleccionada = DateTime.now();
   TextEditingController nombreController = TextEditingController();
   TextEditingController apellidoController = TextEditingController();
   TextEditingController telefonoEmailController = TextEditingController();
@@ -30,26 +32,39 @@ class _PageRegistrarState extends State<PageRegistrar> {
   Widget build(BuildContext context) {
     TextEditingController generoOtroController = TextEditingController();
 
+    void resetAllControllers() {
+      nombreController.clear();
+      apellidoController.clear();
+      telefonoEmailController.clear();
+      passwordController.clear();
+      diaController.clear();
+      mesController.clear();
+      yearController.clear();
+      generoOtroController.clear();
+      setState(() {
+        fechaSeleccionada = DateTime.now();
+      });
+    }
+
     void guardarDatos() {
       String mensaje = adminApp.registrarse(
           nombreController.text,
           apellidoController.text,
           telefonoEmailController.text,
           passwordController.text,
-          diaController.text,
-          mesController.text,
-          yearController.text,
+          fechaSeleccionada,
           generoHombre
-              ? generoOtroController.text = "Hombre"
+              ? "Hombre"
               : generoMujer
-                  ? generoOtroController.text = "Mujer"
+                  ? "Mujer"
                   : generoOtroController.text);
       switch (mensaje) {
         case "casillas":
           SnackbarWidget.showSnackBar(
               context, "ERROR: Hay casillas sin rellenar", true);
         case "year":
-          SnackbarWidget.showSnackBar(context, "ERROR: Año no permitido", true);
+          SnackbarWidget.showSnackBar(
+              context, "ERROR: No tienes edad para usar esta app", true);
 
         case "registrados":
           SnackbarWidget.showSnackBar(context,
@@ -60,6 +75,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
               context,
               "Usuario ${nombreController.text} ${apellidoController.text} registrado con exito",
               false);
+          resetAllControllers();
       }
     }
 
@@ -75,8 +91,21 @@ class _PageRegistrarState extends State<PageRegistrar> {
       });
     }
 
-    Widget myTextfield(String text, control, bool rCheck) {
+    Widget myTextfield(String text, control, bool rCheck, String type) {
+      Map<String, dynamic> listImputs = {
+        "Onlytext": [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
+        "YearInput": [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+          LengthLimitingTextInputFormatter(4),
+        ],
+        "RandomInputs": null,
+        "NumbersOnly": [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+          LengthLimitingTextInputFormatter(2),
+        ]
+      };
       return TextField(
+        inputFormatters: listImputs[type],
         controller: control,
         onTap: () {
           if (rCheck) {
@@ -151,27 +180,55 @@ class _PageRegistrarState extends State<PageRegistrar> {
               Row(
                 children: [
                   Expanded(
-                      child: myTextfield("Nombre", nombreController, false)),
+                      child: myTextfield(
+                          "Nombre", nombreController, false, "Onlytext")),
                   const SizedBox(width: 10),
                   Expanded(
-                      child:
-                          myTextfield("Apellido", apellidoController, false)),
+                      child: myTextfield(
+                          "Apellido", apellidoController, false, "Onlytext")),
                 ],
               ),
               const SizedBox(height: 10),
               myTextfield("numero de celular o correo electronico",
-                  telefonoEmailController, false),
+                  telefonoEmailController, false, "RandomInputs"),
               const SizedBox(height: 10),
-              myTextfield("contraseña", passwordController, false),
+              myTextfield(
+                  "contraseña", passwordController, false, "RandomInputs"),
               const SizedBox(height: 10),
               const Text("Fecha de nacimiento"),
-              Row(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(child: myTextfield("dia", diaController, false)),
-                  const SizedBox(width: 10),
-                  Expanded(child: myTextfield("mes", mesController, false)),
-                  const SizedBox(width: 10),
-                  Expanded(child: myTextfield("año", yearController, false)),
+                  Text(
+                      fechaSeleccionada != null
+                          ? "${fechaSeleccionada.day}/${fechaSeleccionada.month}/${fechaSeleccionada.year}"
+                          : "00/00/0000",
+                      style: TextStyle(fontSize: 20)),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4))),
+                    onPressed: () async {
+                      final DateTime? datetime = await showDatePicker(
+                          context: context,
+                          initialDate: fechaSeleccionada,
+                          firstDate: DateTime(1970),
+                          lastDate: DateTime(2025));
+
+                      if (datetime != null) {
+                        setState(() {
+                          fechaSeleccionada = datetime;
+                          print(
+                              "------------- FECHA SELECCIONADA --------------- ${fechaSeleccionada.day}");
+                        });
+                      }
+                    },
+                    child: const Text(
+                      "SELECCIONE SU FECHA DE NACIMIENTO",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
@@ -186,7 +243,8 @@ class _PageRegistrarState extends State<PageRegistrar> {
                   const SizedBox(width: 10),
                   SizedBox(
                       width: 200,
-                      child: myTextfield("Otras", generoOtroController, true))
+                      child: myTextfield(
+                          "Otras", generoOtroController, true, "RandomInputs"))
                 ],
               ),
               const SizedBox(height: 60),

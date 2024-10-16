@@ -6,23 +6,24 @@ import 'package:patitas/config/routes/routes.dart';
 import '../entities/caso.dart';
 
 class AdminsPatitas {
-  int yearPermitido = 2006;
   String registrarse(String nombre, String apellido, String telefonoOEmail,
-      String password, String dia, String mes, String year, String genero) {
+      String password, DateTime fechaNa, String genero) {
+    int yearMax = 2023 - 18;
     if (nombre.isEmpty ||
         apellido.isEmpty ||
         telefonoOEmail.isEmpty ||
         password.isEmpty ||
-        dia.isEmpty ||
-        mes.isEmpty ||
-        year.isEmpty ||
         genero.isEmpty) {
       return "casillas";
     }
 
-    if (int.parse(year) > yearPermitido) {
+    if (fechaNa.year >= yearMax) {
       return "year";
     }
+
+    // if (int.parse(year) > yearPermitido) {
+    //   return "year";
+    // }
 
     for (Usuario unUsuario in adaptador.listaUsuario) {
       if (unUsuario.telefonoOEmail == telefonoOEmail) {
@@ -31,7 +32,7 @@ class AdminsPatitas {
     }
 
     Fecha fechaNacimiento =
-        Fecha(dia: int.parse(dia), mes: int.parse(mes), year: int.parse(year));
+        Fecha(dia: fechaNa.day, mes: fechaNa.month, year: fechaNa.year);
     Usuario newUsuario = Usuario(
         nombre: nombre,
         apellido: apellido,
