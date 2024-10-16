@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/entidades/usuario.dart';
-import 'package:patitas/screens/routes/routes.dart';
+import 'package:patitas/config/routes/routes.dart';
 
 class Pagedata extends StatelessWidget {
   const Pagedata({super.key});

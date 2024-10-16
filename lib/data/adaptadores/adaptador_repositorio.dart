@@ -2,7 +2,7 @@ import 'package:patitas/entidades/animal.dart';
 import 'package:patitas/entidades/fecha.dart';
 import 'package:patitas/data/repositorio/repositorio.dart';
 import 'package:patitas/entidades/usuario.dart';
-import 'package:patitas/screens/widgets/imagenes.dart';
+import 'package:patitas/presentation/widgets/imagenes.dart';
 
 class AdaptadorRepositorio extends RepositorioUsuarios {
   List<Usuario> listaUsuario = [

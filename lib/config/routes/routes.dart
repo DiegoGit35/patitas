@@ -1,11 +1,11 @@
 import 'package:go_router/go_router.dart';
-import 'package:patitas/screens/pageAdopcion.dart';
-import 'package:patitas/screens/pageData.dart';
-import 'package:patitas/screens/pageInicio.dart';
-import 'package:patitas/screens/pageInicioSesion.dart';
-import 'package:patitas/screens/pageMenu.dart';
-import 'package:patitas/screens/pageRegistrar.dart';
-import 'package:patitas/screens/pageTransitar.dart';
+import 'package:patitas/presentation/pages/pageAdopcion.dart';
+import 'package:patitas/presentation/pages/pageData.dart';
+import 'package:patitas/presentation/pages/pageInicio.dart';
+import 'package:patitas/presentation/pages/pageInicioSesion.dart';
+import 'package:patitas/presentation/pages/pageMenu.dart';
+import 'package:patitas/presentation/pages/pageRegistrar.dart';
+import 'package:patitas/presentation/pages/pageTransitar.dart';
 
 GoRouter router = GoRouter(
   initialLocation: "/",

@@ -2,6 +2,8 @@ import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 
 // import '../enums/distrito.dart';
 
+
+// TODO: fecha, sexo
 class Usuario {
   late String nombre,
       apellido,

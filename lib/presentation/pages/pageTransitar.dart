@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/entidades/animal.dart';
-import 'package:patitas/screens/routes/routes.dart';
-import 'package:patitas/screens/widgets/botones.dart';
-import 'package:patitas/screens/widgets/colores.dart';
-import 'package:patitas/screens/widgets/imagenes.dart';
+import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/presentation/widgets/botones.dart';
+import 'package:patitas/presentation/widgets/colores.dart';
+import 'package:patitas/presentation/widgets/imagenes.dart';
 
 class Pagetransitar extends StatelessWidget {
   const Pagetransitar({super.key});
