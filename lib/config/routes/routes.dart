@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:patitas/presentation/pages/fechatest.dart';
 import 'package:patitas/presentation/pages/pageAdopcion.dart';
 import 'package:patitas/presentation/pages/pageData.dart';
 import 'package:patitas/presentation/pages/pageInicio.dart';
@@ -37,6 +38,10 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/transitar',
       builder: (context, state) => const Pagetransitar(),
+    ),
+    GoRoute(
+      path: '/fechatest',
+      builder: (context, state) => const Fechatest(),
     ),
   ],
 );
