@@ -5,6 +5,7 @@ import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/imagenes.dart';
+import 'package:patitas/presentation/widgets/snakbar.dart';
 
 class Pageiniciosesion extends StatelessWidget {
   const Pageiniciosesion({super.key});
@@ -14,43 +15,37 @@ class Pageiniciosesion extends StatelessWidget {
     TextEditingController numeroCorreoController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
+    void resetAllControllers() {
+      numeroCorreoController.clear();
+      passwordController.clear();
+    }
+
     void verificarDatos() {
       String numeroCorreo = numeroCorreoController.text;
       String password = passwordController.text;
 
-      bool passwordCheck = false;
-      bool numeroCheck = false;
+      String mensaje = adminApp.iniciarSesion(numeroCorreo, password);
 
-      if (numeroCorreo.isEmpty || password.isEmpty) {
-        print("ERROR: FALTAN DATOS");
-        return;
+      switch (mensaje) {
+        case "casillas":
+          SnackbarWidget.showSnackBar(context,
+              "ERROR: Casillas vacias, intente rellenarlas todas", true);
+        case "usuarioNull":
+          SnackbarWidget.showSnackBar(
+              context, "ERROR: Este usuario no existe(no registrado)", true);
+        case "passNull":
+          SnackbarWidget.showSnackBar(
+              context, "ERROR: Contraseña incorrecta o mal escrita", true);
+        case "bien":
+          SnackbarWidget.showSnackBar(context, "BIEN", false);
       }
-
-      for (Usuario user in adaptador.listaUsuario) {
-        if (user.password == password) {
-          passwordCheck = true;
-        }
-
-        if (user.telefonoOEmail == numeroCorreo) {
-          numeroCheck = true;
-        }
-      }
-
-      if (!passwordCheck) {
-        print("ERROR: CONTRASEÑA INCORRECTA");
-        return;
-      } else if (!numeroCheck) {
-        print("ERROR: CORREO O NUMERO INCORRECTOS O NO REGISTRADO");
-        return;
-      }
-
-      adminApp.iniciarSesion(context);
     }
 
-    SizedBox mytexfield(String texto, control) {
+    SizedBox mytexfield(String texto, control, bool taparTexto) {
       return SizedBox(
         width: 500,
         child: TextField(
+          obscureText: taparTexto,
           controller: control,
           decoration: InputDecoration(
             filled: true,
@@ -77,9 +72,9 @@ class Pageiniciosesion extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             mytexfield("numero de celular o correo electrónico",
-                numeroCorreoController),
+                numeroCorreoController, false),
             const SizedBox(height: 20),
-            mytexfield("contraseña", passwordController),
+            mytexfield("contraseña", passwordController, true),
             const SizedBox(height: 30),
             boton("iniciar sesion", () {
               verificarDatos();
@@ -103,7 +98,7 @@ class Pageiniciosesion extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              cambiarPantalla("inicio", context);
+              cambiarPantalla("inicio");
             },
             icon: const Icon(Icons.arrow_back)),
         title: Row(

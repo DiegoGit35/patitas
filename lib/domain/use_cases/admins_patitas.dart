@@ -44,8 +44,29 @@ class AdminsPatitas {
     return "bien";
   }
 
-  void iniciarSesion(context) {
-    cambiarPantalla("menu", context);
+  String iniciarSesion(String numeroEmail, String password) {
+    bool usuarioEncontrado = false;
+    bool passCorrecto = false;
+    if (numeroEmail.isEmpty || password.isEmpty) {
+      return "casillas";
+    }
+
+    for (Usuario unUsuario in adaptador.listaUsuario) {
+      if (unUsuario.telefonoOEmail == numeroEmail) {
+        usuarioEncontrado = true;
+        if (unUsuario.password == password) {
+          passCorrecto = true;
+        }
+      }
+    }
+
+    if (!usuarioEncontrado) {
+      return "usuarioNull";
+    } else if (!passCorrecto) {
+      return "passNull";
+    }
+
+    return "bien";
   }
 
   void adoptar() {}

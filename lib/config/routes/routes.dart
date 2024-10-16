@@ -9,10 +9,10 @@ import 'package:patitas/presentation/pages/pageRegistrar.dart';
 import 'package:patitas/presentation/pages/pageTransitar.dart';
 
 GoRouter router = GoRouter(
-  initialLocation: "/",
+  initialLocation: "/inicio",
   routes: [
     GoRoute(
-      path: '/',
+      path: '/inicio',
       builder: (context, state) => const Pageinicio(),
     ),
     GoRoute(
@@ -46,23 +46,6 @@ GoRouter router = GoRouter(
   ],
 );
 
-void cambiarPantalla(String route, context) {
-  switch (route) {
-    case "inicio":
-      GoRouter.of(context).go("/");
-    case "registrarse":
-      GoRouter.of(context).go("/registrarse");
-    case "login":
-      GoRouter.of(context).go("/login");
-    case "data":
-      GoRouter.of(context).go("/data");
-    case "menu":
-      GoRouter.of(context).go("/menu");
-    case "adopcion":
-      GoRouter.of(context).go("/adopcion");
-    case "transitar":
-      GoRouter.of(context).go("/transitar");
-    default:
-      GoRouter.of(context).go("/");
-  }
+void cambiarPantalla(String route) {
+  router.go("/$route");
 }

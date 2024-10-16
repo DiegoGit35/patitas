@@ -12,7 +12,7 @@ class Pagedata extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              cambiarPantalla("inicio", context);
+              cambiarPantalla("inicio");
             },
             icon: Icon(Icons.arrow_back)),
         title: Text("data"),

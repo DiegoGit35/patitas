@@ -14,7 +14,7 @@ class Pagemenu extends StatelessWidget {
         title: Text("MENU"),
         leading: IconButton(
             onPressed: () {
-              cambiarPantalla("inicio", context);
+              cambiarPantalla("inicio");
             },
             icon: const Icon(Icons.arrow_back)),
       ),
@@ -40,11 +40,11 @@ Container containerTwo(context) {
                 boton("se busca", () {}),
                 const SizedBox(height: 10),
                 boton("adopcion", () {
-                  cambiarPantalla("adopcion", context);
+                  cambiarPantalla("adopcion");
                 }),
                 const SizedBox(height: 10),
                 boton("transito", () {
-                  cambiarPantalla("transitar", context);
+                  cambiarPantalla("transitar");
                 })
               ],
             ),

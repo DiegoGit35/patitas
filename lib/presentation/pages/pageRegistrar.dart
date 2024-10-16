@@ -91,7 +91,8 @@ class _PageRegistrarState extends State<PageRegistrar> {
       });
     }
 
-    Widget myTextfield(String text, control, bool rCheck, String type) {
+    Widget myTextfield(
+        String text, control, bool rCheck, String type, bool taparTexto) {
       Map<String, dynamic> listImputs = {
         "Onlytext": [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
         "YearInput": [
@@ -107,6 +108,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
       return TextField(
         inputFormatters: listImputs[type],
         controller: control,
+        obscureText: taparTexto,
         onTap: () {
           if (rCheck) {
             setState(() {
@@ -148,7 +150,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              cambiarPantalla("inicio", context);
+              cambiarPantalla("inicio");
             },
             icon: const Icon(Icons.arrow_back)),
         title: Row(
@@ -180,20 +182,20 @@ class _PageRegistrarState extends State<PageRegistrar> {
               Row(
                 children: [
                   Expanded(
-                      child: myTextfield(
-                          "Nombre", nombreController, false, "Onlytext")),
+                      child: myTextfield("Nombre", nombreController, false,
+                          "Onlytext", false)),
                   const SizedBox(width: 10),
                   Expanded(
-                      child: myTextfield(
-                          "Apellido", apellidoController, false, "Onlytext")),
+                      child: myTextfield("Apellido", apellidoController, false,
+                          "Onlytext", false)),
                 ],
               ),
               const SizedBox(height: 10),
               myTextfield("numero de celular o correo electronico",
-                  telefonoEmailController, false, "RandomInputs"),
+                  telefonoEmailController, false, "RandomInputs", false),
               const SizedBox(height: 10),
-              myTextfield(
-                  "contraseña", passwordController, false, "RandomInputs"),
+              myTextfield("contraseña", passwordController, false,
+                  "RandomInputs", true),
               const SizedBox(height: 10),
               const Text("Fecha de nacimiento"),
               Column(
@@ -243,8 +245,8 @@ class _PageRegistrarState extends State<PageRegistrar> {
                   const SizedBox(width: 10),
                   SizedBox(
                       width: 200,
-                      child: myTextfield(
-                          "Otras", generoOtroController, true, "RandomInputs"))
+                      child: myTextfield("Otras", generoOtroController, true,
+                          "RandomInputs", false))
                 ],
               ),
               const SizedBox(height: 60),

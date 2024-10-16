@@ -36,15 +36,15 @@ Container containerOne(context) {
             child: Column(
               children: [
                 boton("registrar usuario", () {
-                  cambiarPantalla("registrarse", context);
+                  cambiarPantalla("registrarse");
                 }),
                 const SizedBox(height: 10),
                 boton("iniciar sesión", () {
-                  cambiarPantalla("login", context);
+                  cambiarPantalla("login");
                 }),
                 const SizedBox(height: 10),
                 boton("data", () {
-                  cambiarPantalla("data", context);
+                  cambiarPantalla("data");
                 })
               ],
             ),
