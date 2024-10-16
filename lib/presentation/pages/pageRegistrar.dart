@@ -6,6 +6,7 @@ import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/imagenes.dart';
+import 'package:patitas/presentation/widgets/snakbar.dart';
 
 class PageRegistrar extends StatefulWidget {
   const PageRegistrar({super.key});
@@ -30,46 +31,36 @@ class _PageRegistrarState extends State<PageRegistrar> {
     TextEditingController generoOtroController = TextEditingController();
 
     void guardarDatos() {
-      if (nombreController.text.isEmpty ||
-          apellidoController.text.isEmpty ||
-          telefonoEmailController.text.isEmpty ||
-          passwordController.text.isEmpty ||
-          diaController.text.isEmpty ||
-          mesController.text.isEmpty ||
-          yearController.text.isEmpty) {
-        print("FALTAN DATOS");
-        return;
+      String mensaje = adminApp.registrarse(
+          nombreController.text,
+          apellidoController.text,
+          telefonoEmailController.text,
+          passwordController.text,
+          diaController.text,
+          mesController.text,
+          yearController.text,
+          generoHombre
+              ? generoOtroController.text = "Hombre"
+              : generoMujer
+                  ? generoOtroController.text = "Mujer"
+                  : generoOtroController.text);
+      switch (mensaje) {
+        case "casillas":
+          SnackbarWidget.showSnackBar(
+              context, "ERROR: Hay casillas sin rellenar", true);
+        case "year":
+          SnackbarWidget.showSnackBar(context, "ERROR: Año no permitido", true);
+
+        case "registrados":
+          SnackbarWidget.showSnackBar(context,
+              "ERROR: Numero de telefono o Email ya están registrados", true);
+
+        case "bien":
+          SnackbarWidget.showSnackBar(
+              context,
+              "Usuario ${nombreController.text} ${apellidoController.text} registrado con exito",
+              false);
       }
-
-      if (!generoHombre && !generoMujer && generoOtroController.text.isEmpty) {
-        print("SELECCIONE TU GENERO");
-        return;
-      }
-
-      String generoUsuario = "";
-
-      if (generoHombre) {
-        generoUsuario = "Masculino";
-      } else if (generoMujer) {
-        generoUsuario = "Femenino";
-      } else {
-        generoUsuario = generoOtroController.text;
-      }
-
-      Fecha fechaUser = Fecha(
-          dia: int.parse(diaController.text),
-          mes: int.parse(mesController.text),
-          year: int.parse(yearController.text));
-
-      Usuario newUsuario = Usuario(
-          nombre: nombreController.text,
-          apellido: apellidoController.text,
-          telefonoOEmail: telefonoEmailController.text,
-          password: passwordController.text,
-          fechaNacimiento: fechaUser,
-          genero: generoUsuario);
-
-      adminApp.registrarse(newUsuario);
     }
 
     void clickCheckbox(newValor, String genero) {

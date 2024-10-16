@@ -41,5 +41,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/database/patitas.db
+    - assets/imagenes/logov4.png
   #   - assets/menu_opts.json
   #   - images/a_dot_ham.jpeg
