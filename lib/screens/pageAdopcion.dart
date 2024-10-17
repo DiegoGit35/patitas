@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/entidades/animal.dart';
 import 'package:patitas/screens/routes/routes.dart';
-import 'package:patitas/screens/widgets/botones.dart';
 import 'package:patitas/screens/widgets/colores.dart';
-import 'package:patitas/screens/widgets/imagenes.dart';
 
 class Pageadopcion extends StatelessWidget {
   const Pageadopcion({super.key});
