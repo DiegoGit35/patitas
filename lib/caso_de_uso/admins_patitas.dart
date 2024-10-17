@@ -8,7 +8,7 @@ class AdminsPatitas {
   }
 
   void iniciarSesion(context) {
-    cambiarPantalla("menu", context);
+    cambiarPantalla("menu");
   }
 
   void adoptar() {}

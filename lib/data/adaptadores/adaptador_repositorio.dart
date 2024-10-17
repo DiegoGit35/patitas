@@ -32,6 +32,14 @@ class AdaptadorRepositorio extends RepositorioUsuarios {
         foto: imgAnimles[3],
         telefono: "6345363463",
         ubicacion: "Avenida Siempre Viva 747"),
+    Animal(
+        foto: imgAnimles[3],
+        telefono: "6345363463",
+        ubicacion: "Avenida Siempre Viva 747"),
+    Animal(
+        foto: imgAnimles[3],
+        telefono: "6345363463",
+        ubicacion: "Avenida Siempre Viva 747"),
   ];
 
   @override

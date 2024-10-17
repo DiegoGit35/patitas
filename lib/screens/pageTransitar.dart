@@ -16,7 +16,7 @@ class Pagetransitar extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              cambiarPantalla("menu", context);
+              cambiarPantalla("menu");
             },
             icon: const Icon(Icons.arrow_back)),
       ),

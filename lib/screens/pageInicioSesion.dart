@@ -103,7 +103,7 @@ class Pageiniciosesion extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              cambiarPantalla("inicio", context);
+              cambiarPantalla("inicio");
             },
             icon: const Icon(Icons.arrow_back)),
         title: Row(
