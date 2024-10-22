@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/data/adaptador.dart';
-import 'package:patitas/entidades/usuario.dart';
+
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/domain/entities/usuario.dart';
 
 class Pagedata extends StatelessWidget {
   const Pagedata({super.key});
@@ -24,7 +25,7 @@ class Pagedata extends StatelessWidget {
           Usuario unUsuario = adaptador.listaUsuario[index];
           return Center(
             child: Text(
-                "nombre:  ${unUsuario.nombre}\napellido:  ${unUsuario.apellido}\ntelefono o email:  ${unUsuario.telefonoOEmail}\npassword:  ${unUsuario.password}\nfecha de nacimiento:  ${unUsuario.fechaNacimiento}\ngenero:  ${unUsuario.genero}"),
+                "nombre:  ${unUsuario.nombre}\napellido:  ${unUsuario.apellido}\ntelefono o email:  ${unUsuario.email}\npassword:  ${unUsuario.contrasenia}\nfecha de nacimiento:  ${unUsuario.fechaNacimiento}\ngenero:  ${unUsuario.sexo}"),
           );
         },
       ),

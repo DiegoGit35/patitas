@@ -1,5 +1,5 @@
+import 'package:patitas/domain/entities/fecha.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
-import 'package:patitas/entidades/fecha.dart';
 
 // import '../enums/distrito.dart';
 

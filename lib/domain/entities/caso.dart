@@ -3,7 +3,7 @@ import '../enums/tipo_de_caso.dart';
 import 'usuario.dart';
 
 class Caso {
-  late String direccion, distrito, contacto;
+  late String direccion, distrito, contacto, foto;
   late String? fechaBaja, fechaRegistro;
   late TipoDeCaso tipoDeCaso;
   late EstadoDeCaso estado;

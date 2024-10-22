@@ -1,4 +1,4 @@
-import 'package:patitas/entidades/usuario.dart';
+import 'package:patitas/domain/entities/usuario.dart';
 
 abstract class RepositorioUsuarios {
   void guardaDatosMemoria(Usuario newUsuario);

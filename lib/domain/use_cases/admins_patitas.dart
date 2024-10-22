@@ -1,7 +1,7 @@
 import 'package:patitas/data/adaptador.dart';
-import 'package:patitas/entidades/fecha.dart';
-import 'package:patitas/entidades/usuario.dart';
+
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/domain/entities/usuario.dart';
 
 import '../entities/caso.dart';
 
@@ -25,22 +25,26 @@ class AdminsPatitas {
     //   return "year";
     // }
 
-    for (Usuario unUsuario in adaptador.listaUsuario) {
-      if (unUsuario.telefonoOEmail == telefonoOEmail) {
-        return "registrados";
-      }
-    }
+    ////------------------ descomentar y arreglar esto
+    // for (Usuario unUsuario in adaptador.listaUsuario) {
+    //   if (unUsuario.telefonoOEmail == telefonoOEmail) {
+    //     return "registrados";
+    //   }
+    // }
 
-    Fecha fechaNacimiento =
-        Fecha(dia: fechaNa.day, mes: fechaNa.month, year: fechaNa.year);
-    Usuario newUsuario = Usuario(
-        nombre: nombre,
-        apellido: apellido,
-        telefonoOEmail: telefonoOEmail,
-        password: password,
-        fechaNacimiento: fechaNacimiento,
-        genero: genero);
-    adaptador.guardaDatosMemoria(newUsuario);
+    ////------------------ descomentar y arreglar esto
+    // Fecha fechaNacimiento =
+    //     Fecha(dia: fechaNa.day, mes: fechaNa.month, year: fechaNa.year);
+    // Usuario newUsuario = Usuario(
+    //     nombre: nombre,
+    //     apellido: apellido,
+    //     telefonoOEmail: telefonoOEmail,
+    //     password: password,
+    //     fechaNacimiento: fechaNacimiento,
+    //     genero: genero);
+
+    ////------------------ descomentar y arreglar esto
+    // adaptador.guardaDatosMemoria(newUsuario);
     return "bien";
   }
 
@@ -51,14 +55,15 @@ class AdminsPatitas {
       return "casillas";
     }
 
-    for (Usuario unUsuario in adaptador.listaUsuario) {
-      if (unUsuario.telefonoOEmail == numeroEmail) {
-        usuarioEncontrado = true;
-        if (unUsuario.password == password) {
-          passCorrecto = true;
-        }
-      }
-    }
+    ////------------------ descomentar y arreglar esto
+    // for (Usuario unUsuario in adaptador.listaUsuario) {
+    //   if (unUsuario.telefonoOEmail == numeroEmail) {
+    //     usuarioEncontrado = true;
+    //     if (unUsuario.password == password) {
+    //       passCorrecto = true;
+    //     }
+    //   }
+    // }
 
     if (!usuarioEncontrado) {
       return "usuarioNull";

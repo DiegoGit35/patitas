@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/data/adaptador.dart';
-import 'package:patitas/entidades/animal.dart';
+
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/domain/entities/caso.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/imagenes.dart';
@@ -37,7 +38,7 @@ class Pageadopcion extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: adaptador.listaAnimales.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Animal unAnimal = adaptador.listaAnimales[index];
+                  Caso unAnimal = adaptador.listaAnimales[index];
                   return Center(
                     child: Padding(
                         padding: EdgeInsets.all(5),
@@ -64,7 +65,7 @@ Text texto(String texto, double size, Color color, bool masGrueso) {
   );
 }
 
-Container animalItem(Animal unAnimal) {
+Container animalItem(Caso unAnimal) {
   return Container(
     width: 300,
     height: 400,
@@ -88,10 +89,10 @@ Container animalItem(Animal unAnimal) {
                 child: Column(
                   children: [
                     texto("ubicacion:", 15, Colors.black, true),
-                    texto(unAnimal.ubicacion, 15,
+                    texto(unAnimal.direccion, 15,
                         const Color.fromARGB(255, 75, 75, 75), false),
                     texto("contacto:", 15, Colors.black, true),
-                    texto(unAnimal.telefono, 15,
+                    texto(unAnimal.contacto, 15,
                         const Color.fromARGB(255, 75, 75, 75), false),
                   ],
                 ),
