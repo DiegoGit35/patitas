@@ -1,7 +1,7 @@
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
+import 'package:patitas/entidades/fecha.dart';
 
 // import '../enums/distrito.dart';
-
 
 // TODO: fecha, sexo
 class Usuario {
@@ -11,15 +11,20 @@ class Usuario {
       contrasenia,
       direccion,
       telefono,
+      sexo,
       distrito;
+
   late int? dni, idUsuario;
   late TipoDeUsuario tipo;
   // late Distrito distrito;
   late String? fechaBaja, fechaAlta;
+  Fecha fechaNacimiento;
 
   Usuario({
     required this.nombre,
     required this.apellido,
+    required this.sexo,
+    required this.fechaNacimiento,
     required this.email,
     required this.contrasenia,
     required this.direccion,
