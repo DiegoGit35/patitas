@@ -1,0 +1,13 @@
+@startuml
+actor     usuario         as v
+boundary  pageAdopcion    as a  
+control   cuPatitas       as c
+database  firebase        as f
+entity    routes          as r
+r -> a : VerCasos(context)
+a -> c : getCasosActivos()
+c -> f : getCasos()
+f --> c : List<Casos> 
+c -> c : filtrarActivos()
+c --> a : List<Casos>
+@enduml

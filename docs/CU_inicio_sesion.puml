@@ -1,0 +1,17 @@
+@startuml
+actor     Visitante         as v 
+boundary  pageInicioSesion  as i  
+control   adminsPatitas     as a
+'entity    Usuario           as u
+database  firebase          as f
+entity    routes            as r
+v -> i : ingresarMail
+v -> i : ingresarContraseña
+i -> a : iniciarSesion(String email, String contraseña)
+a -> f : getUsuarioByMail(String email)
+f --> a : Usuario
+a -> a : validarContraseña(Usuario.contraseña, contraseña)
+a --> i : 200ok(SessionID)
+i -> r : cambiarPantalla(String inicio, context)
+@enduml
+

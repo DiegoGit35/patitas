@@ -1,0 +1,15 @@
+@startuml
+:Usuario: as u
+:Visitante: as v
+:Admin: as a 
+a --> (registrar nuevo caso)
+a --> (marcar manualmente un caso como resuelto)
+a --> (administrar usuarios)
+a --> u
+u --> (ver casos)
+(ver casos) <|.. (compartir) : extends
+(ver casos) <|.. (adoptar) : extends
+(ver casos) <|.. (dar transito) : extends
+v --> (iniciar sesión)
+v --> (registrarse)
+@enduml

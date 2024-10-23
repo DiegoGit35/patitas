@@ -13,7 +13,7 @@ class AdaptadorRepositorio extends RepositorioUsuarios {
         nombre: "Agustin",
         apellido: "Zapata",
         sexo: "Masculino",
-        fechaNacimiento: Fecha(dia: 10, mes: 08, anio: 2002),
+        fechaNacimiento: DateTime.now(),
         email: "agus@gmail.com",
         contrasenia: "agus123",
         direccion: "mi casa 123",

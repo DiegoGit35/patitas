@@ -1,36 +1,37 @@
+import 'dart:core';
+
 import 'package:patitas/domain/entities/fecha.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 
-// import '../enums/distrito.dart';
-
-// TODO: fecha, sexo
 class Usuario {
-  late String nombre,
-      apellido,
-      email,
-      contrasenia,
-      direccion,
-      telefono,
-      sexo,
-      distrito;
+  String? idUsuario;
+  String? nombre;
+  String? apellido;
+  String? foto;
+  DateTime? fechaNacimiento;
+  String? email;
+  String? contrasenia;
+  String? direccion;
+  String? distrito;
+  String? telefono;
+  TipoDeUsuario tipo;
+  String? dni;
+  String? sexo;
 
-  late int? dni, idUsuario;
-  late TipoDeUsuario tipo;
-  // late Distrito distrito;
-  late String? fechaBaja, fechaAlta;
-  Fecha fechaNacimiento;
 
   Usuario({
-    required this.nombre,
-    required this.apellido,
-    required this.sexo,
-    required this.fechaNacimiento,
-    required this.email,
-    required this.contrasenia,
-    required this.direccion,
-    required this.distrito,
-    required this.telefono,
-    this.tipo = TipoDeUsuario.normal,
+    this.idUsuario,
+    this.nombre,
+    this.apellido,
+    this.foto,
+    this.fechaNacimiento,
+    this.email,
+    this.contrasenia,
+    this.direccion,
+    this.distrito,
+    this.telefono,
+    this.tipo  = TipoDeUsuario.normal,
     this.dni,
+    this.sexo,
   });
 }

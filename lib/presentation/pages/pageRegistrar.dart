@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:patitas/data/adaptador.dart';
 
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/domain/use_cases/administracion_patitas.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/imagenes.dart';
@@ -46,7 +47,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
     }
 
     void guardarDatos() {
-      String mensaje = adminApp.registrarse(
+      String mensaje = AdministracionPatitas().registrarse(
           nombreController.text,
           apellidoController.text,
           telefonoEmailController.text,

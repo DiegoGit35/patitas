@@ -3,20 +3,25 @@ import '../enums/tipo_de_caso.dart';
 import 'usuario.dart';
 
 class Caso {
-  late String direccion, distrito, contacto, foto;
-  late String? fechaBaja, fechaRegistro;
-  late TipoDeCaso tipoDeCaso;
-  late EstadoDeCaso estado;
-  late Usuario usuarioRegistrante;
-  late Usuario? usuarioAdoptante;
-  late int? idCaso;
+  String direccion, distrito, contacto, foto;
+  String? fechaBaja, fechaRegistro, fechaResolucion;
+  TipoDeCaso tipoDeCaso;
+  EstadoDeCaso estado;
+  Usuario usuarioRegistrante;
+  Usuario? usuarioAdoptante;
+  int? idCaso;
 
-  Caso({
-    required this.direccion,
-    required this.distrito,
-    required this.contacto,
-    required this.tipoDeCaso,
-    required this.usuarioRegistrante,
-    this.estado = EstadoDeCaso.pendiente,
-  });
+  Caso(
+    this.idCaso,
+    this.direccion,
+    this.distrito,
+    this.contacto,
+    this.foto,
+    this.fechaRegistro,
+    this.fechaBaja,
+    this.fechaResolucion,
+    this.tipoDeCaso,
+    this.usuarioRegistrante,
+    this.estado,
+  );
 }
