@@ -6,9 +6,10 @@ a --> (marcar caso como resuelto)
 a --> (administrar usuarios)
 a --|> u
 u --> (ver casos)
-(ver casos) <.. (compartir)
-(ver casos) <.. (adoptar)
-(ver casos) <.. (dar transito)
+(ver casos) <.. (compartir) : <ext>
+(ver casos) <.. (adoptar) : <ext>
+(ver casos) <.. (dar transito) : <ext>
+
 
 
 @enduml

@@ -37,6 +37,11 @@ class AdministracionPatitas {
     return "";
   }
 
+  Future<List<Usuario>> getTodosLosUsuariosActivos() async {
+    List<Usuario> usuarios = await repoUsuario.todosLosUsuarios();
+    return usuarios;
+  }
+
   void adoptar() {}
 
   void transitar() {}

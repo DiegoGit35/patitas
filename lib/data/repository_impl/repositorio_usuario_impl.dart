@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/entities/usuario.dart';
+import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
 
 class RepositorioUsuarioImpl implements RepositorioUsuario{
@@ -47,13 +48,13 @@ class RepositorioUsuarioImpl implements RepositorioUsuario{
               nombre: dict["nombre"],
               apellido: dict["apellido"],
               foto: dict["foto"],
-              fechaNacimiento:  dict["fechaNacimiento"],
+              fechaNacimiento:  (dict["fechaNacimiento"] as Timestamp).toDate(),
               email: dict["email"],
               contrasenia:  dict["contrasenia"],
               direccion:  dict["direccion"],
               distrito:  dict["distrito"],
               telefono:  dict["telefono"],
-              tipo:  dict["tipo"],
+              tipo:  dict["tipo"] ?? TipoDeUsuario.normal,
               dni:  dict["dni"],
             ))
         .toList();
