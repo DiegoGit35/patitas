@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:210073379809:android:df4dd255ef5e22bf14a8a0",
+        "android_client_info": {
+          "package_name": "com.pat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2UtnuIXgYKvzvcrZ_gHlnlRTKU4eatvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:210073379809:android:a1b51b4df0b9744214a8a0",
         "android_client_info": {
           "package_name": "com.patitas.app"

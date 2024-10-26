@@ -4,22 +4,23 @@ import 'package:patitas/domain/repository/repositorio_usuario.dart';
 
 class RepositorioUsuarioImpl implements RepositorioUsuario{
   CollectionReference coleccionUsuarios =
-      FirebaseFirestore.instance.collection("Usuarios");
+      FirebaseFirestore.instance.collection("Usuario");
       
   @override
   void agregarUsuario(Usuario nuevoUsuario) async {
     Map<String, dynamic> usuario = {
       "nombre": nuevoUsuario.nombre,
       "apellido": nuevoUsuario.apellido,
-      "foto": nuevoUsuario.foto,
       "fechaNacimiento": nuevoUsuario.fechaNacimiento,
       "email": nuevoUsuario.email,
       "contrasenia": nuevoUsuario.contrasenia,
-      "direccion": nuevoUsuario.direccion,
-      "distrito": nuevoUsuario.distrito,
-      "telefono": nuevoUsuario.telefono,
-      "tipo": nuevoUsuario.tipo,
-      "dni": nuevoUsuario.dni,
+      "foto": "assets/default-avatar.png",
+      "sexo": nuevoUsuario.sexo,
+      // "direccion": nuevoUsuario.direccion,
+      // "distrito": nuevoUsuario.distrito,
+      // "telefono": nuevoUsuario.telefono,
+      // "tipo": nuevoUsuario.tipo,
+      // "dni": nuevoUsuario.dni,
     };
 
     await coleccionUsuarios.add(usuario);

@@ -14,9 +14,6 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-
-
-
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -26,9 +23,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
@@ -58,24 +61,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '210073379809',
     projectId: 'patitas-1e81e',
     storageBucket: 'patitas-1e81e.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBnW-YCd452KGLIdecIGRztXpy0HHXVrbw',
-    appId: '1:210073379809:ios:5d95b1832766131814a8a0',
-    messagingSenderId: '210073379809',
-    projectId: 'patitas-1e81e',
-    storageBucket: 'patitas-1e81e.appspot.com',
-    iosBundleId: 'com.example.patitas',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBnW-YCd452KGLIdecIGRztXpy0HHXVrbw',
-    appId: '1:210073379809:ios:5d95b1832766131814a8a0',
-    messagingSenderId: '210073379809',
-    projectId: 'patitas-1e81e',
-    storageBucket: 'patitas-1e81e.appspot.com',
-    iosBundleId: 'com.example.patitas',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

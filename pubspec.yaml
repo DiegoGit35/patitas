@@ -23,6 +23,7 @@ dependencies:
   go_router: ^14.3.0
   firebase_core: ^3.6.0
   cloud_firestore: ^5.4.4
+  firebase_data_connect: ^0.1.2+1
 
 dev_dependencies:
   flutter_test:
@@ -38,7 +39,8 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/database/patitas.db
+    # - assets/database/patitas.db
     - assets/imagenes/logov4.png
+    - assets/default-avatar.png
   #   - assets/menu_opts.json
   #   - images/a_dot_ham.jpeg

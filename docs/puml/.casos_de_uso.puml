@@ -1,0 +1,15 @@
+@startuml Casos_de_uso
+:Usuario: as u
+:Admin: as a 
+a --> (registrar nuevo caso)
+a --> (marcar caso como resuelto)
+a --> (administrar usuarios)
+a --|> u
+u --> (ver casos)
+(ver casos) <.. (compartir)
+(ver casos) <.. (adoptar)
+(ver casos) <.. (dar transito)
+
+
+@enduml
+

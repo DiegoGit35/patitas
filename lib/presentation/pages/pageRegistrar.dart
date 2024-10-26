@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:patitas/data/adaptador.dart';
 
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/domain/use_cases/administracion_patitas.dart';
@@ -31,6 +30,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
   @override
   Widget build(BuildContext context) {
     TextEditingController generoOtroController = TextEditingController();
+    AdministracionPatitas adm = AdministracionPatitas();
 
     void resetAllControllers() {
       nombreController.clear();
@@ -47,7 +47,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
     }
 
     void guardarDatos() {
-      String mensaje = AdministracionPatitas().registrarse(
+      String mensaje = adm.registrarse(
           nombreController.text,
           apellidoController.text,
           telefonoEmailController.text,

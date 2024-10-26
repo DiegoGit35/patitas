@@ -1,6 +1,5 @@
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
-import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
 
 import '../entities/caso.dart';
