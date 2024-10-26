@@ -2,6 +2,7 @@ import 'package:patitas/data/adaptador.dart';
 
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/domain/entities/usuario.dart';
+import 'package:patitas/domain/use_cases/administracion_patitas.dart';
 
 import '../entities/caso.dart';
 
@@ -48,22 +49,28 @@ class AdminsPatitas {
     return "bien";
   }
 
-  String iniciarSesion(String numeroEmail, String password) {
+  Future<String> iniciarSesion(String numeroEmail, String password) async {
     bool usuarioEncontrado = false;
     bool passCorrecto = false;
     if (numeroEmail.isEmpty || password.isEmpty) {
       return "casillas";
     }
 
-    ////------------------ descomentar y arreglar esto
-    // for (Usuario unUsuario in adaptador.listaUsuario) {
-    //   if (unUsuario.telefonoOEmail == numeroEmail) {
-    //     usuarioEncontrado = true;
-    //     if (unUsuario.password == password) {
-    //       passCorrecto = true;
-    //     }
-    //   }
-    // }
+    print("email:$numeroEmail\nContraseña:$password");
+
+    AdministracionPatitas adm = AdministracionPatitas();
+
+    List<Usuario> UsersFirebase = await adm.getTodosLosUsuariosActivos();
+
+    for (Usuario unUsuario in UsersFirebase) {
+      print("DATOS FIREBASE: ${unUsuario.email}");
+      if (unUsuario.email == numeroEmail) {
+        usuarioEncontrado = true;
+        if (unUsuario.contrasenia == password) {
+          passCorrecto = true;
+        }
+      }
+    }
 
     if (!usuarioEncontrado) {
       return "usuarioNull";

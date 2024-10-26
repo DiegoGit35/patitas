@@ -18,7 +18,6 @@ class Usuario {
   String? dni;
   String? sexo;
 
-
   Usuario({
     this.idUsuario,
     this.nombre,
@@ -30,7 +29,7 @@ class Usuario {
     this.direccion,
     this.distrito,
     this.telefono,
-    this.tipo  = TipoDeUsuario.normal,
+    this.tipo = TipoDeUsuario.normal,
     this.dni,
     this.sexo,
   });

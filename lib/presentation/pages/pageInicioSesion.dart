@@ -22,12 +22,13 @@ class Pageiniciosesion extends StatelessWidget {
       passwordController.clear();
     }
 
-    void verificarDatos() {
+    void verificarDatos() async {
       String numeroCorreo = numeroCorreoController.text;
       String password = passwordController.text;
 
-      String mensaje = adminApp.iniciarSesion(numeroCorreo, password);
-
+      print("....................VERIFICANDO....................");
+      String mensaje = await adminApp.iniciarSesion(numeroCorreo, password);
+      print("....................DATOS VERIFICADOS....................");
       switch (mensaje) {
         case "casillas":
           SnackbarWidget.showSnackBar(context,
@@ -39,7 +40,7 @@ class Pageiniciosesion extends StatelessWidget {
           SnackbarWidget.showSnackBar(
               context, "ERROR: Contraseña incorrecta o mal escrita", true);
         case "bien":
-          SnackbarWidget.showSnackBar(context, "BIEN", false);
+          cambiarPantalla("menu");
       }
     }
 

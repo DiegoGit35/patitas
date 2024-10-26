@@ -12,11 +12,6 @@ class Pagemenu extends StatelessWidget {
       backgroundColor: fondoColor,
       appBar: AppBar(
         title: Text("MENU"),
-        leading: IconButton(
-            onPressed: () {
-              cambiarPantalla("inicio");
-            },
-            icon: const Icon(Icons.arrow_back)),
       ),
       body: Center(
         child: containerTwo(context),
@@ -45,7 +40,11 @@ Container containerTwo(context) {
                 const SizedBox(height: 10),
                 boton("transito", () {
                   cambiarPantalla("transitar");
-                })
+                }),
+                const SizedBox(height: 15),
+                boton("cerrar session", () {
+                  cambiarPantalla("inicio");
+                }),
               ],
             ),
           )

@@ -3,10 +3,10 @@ import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
 
-class RepositorioUsuarioImpl implements RepositorioUsuario{
+class RepositorioUsuarioImpl implements RepositorioUsuario {
   CollectionReference coleccionUsuarios =
       FirebaseFirestore.instance.collection("Usuario");
-      
+
   @override
   void agregarUsuario(Usuario nuevoUsuario) async {
     Map<String, dynamic> usuario = {
@@ -40,23 +40,23 @@ class RepositorioUsuarioImpl implements RepositorioUsuario{
 
   @override
   Future<List<Usuario>> todosLosUsuarios() async {
-     return (await coleccionUsuarios.get())
+    return (await coleccionUsuarios.get())
         .docs
         .map((element) => element.data() as Map<String, dynamic>)
         .map((dict) => Usuario(
-              idUsuario: dict["idUsuario"],
-              nombre: dict["nombre"],
-              apellido: dict["apellido"],
-              foto: dict["foto"],
-              fechaNacimiento:  (dict["fechaNacimiento"] as Timestamp).toDate(),
-              email: dict["email"],
-              contrasenia:  dict["contrasenia"],
-              direccion:  dict["direccion"],
-              distrito:  dict["distrito"],
-              telefono:  dict["telefono"],
-              tipo:  dict["tipo"] ?? TipoDeUsuario.normal,
-              dni:  dict["dni"],
-            ))
+            idUsuario: dict["idUsuario"],
+            nombre: dict["nombre"],
+            apellido: dict["apellido"],
+            foto: dict["foto"],
+            fechaNacimiento: (dict["fechaNacimiento"] as Timestamp).toDate(),
+            email: dict["email"],
+            contrasenia: dict["contrasenia"],
+            direccion: dict["direccion"],
+            distrito: dict["distrito"],
+            telefono: dict["telefono"],
+            tipo: dict["tipo"] ?? TipoDeUsuario.normal,
+            dni: dict["dni"],
+            sexo: dict["sexo"]))
         .toList();
   }
 
@@ -65,5 +65,4 @@ class RepositorioUsuarioImpl implements RepositorioUsuario{
     // TODO: implement todosLosUsuariosActivos
     throw UnimplementedError();
   }
-
 }
