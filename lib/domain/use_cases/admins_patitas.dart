@@ -68,6 +68,7 @@ class AdminsPatitas {
         usuarioEncontrado = true;
         if (unUsuario.contrasenia == password) {
           passCorrecto = true;
+          break;
         }
       }
     }

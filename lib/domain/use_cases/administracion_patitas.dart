@@ -6,13 +6,14 @@ import '../entities/caso.dart';
 
 class AdministracionPatitas {
   RepositorioUsuario repoUsuario = RepositorioUsuarioImpl();
-
-  String registrarse(String nombre, String apellido, String telefonoOEmail,
-      String password, DateTime fechaNa, String genero) {
+  Future<String> registrarse(String nombre, String apellido, String email,
+      String telefono, String password, DateTime fechaNa, String genero) async {
     int yearMax = 2023 - 18;
+
     if (nombre.isEmpty ||
         apellido.isEmpty ||
-        telefonoOEmail.isEmpty ||
+        email.isEmpty ||
+        telefono.isEmpty ||
         password.isEmpty ||
         genero.isEmpty) {
       return "casillas";
@@ -22,14 +23,20 @@ class AdministracionPatitas {
       return "year";
     }
 
+    if (await repoUsuario.getUsuarioByEmail(email) || await repoUsuario.getUsuarioByTelefono(telefono)) {
+      return "registrado";
+    }
+
     repoUsuario.agregarUsuario(Usuario(
       nombre: nombre,
       apellido: apellido,
       fechaNacimiento: fechaNa,
-      email: telefonoOEmail,
+      email: email,
+      telefono: telefono,
       contrasenia: password,
       sexo: genero,
     ));
+
     return "bien";
   }
 

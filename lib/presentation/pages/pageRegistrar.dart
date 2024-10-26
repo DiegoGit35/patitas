@@ -21,7 +21,8 @@ class _PageRegistrarState extends State<PageRegistrar> {
   DateTime fechaSeleccionada = DateTime.now();
   TextEditingController nombreController = TextEditingController();
   TextEditingController apellidoController = TextEditingController();
-  TextEditingController telefonoEmailController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController telefonoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController diaController = TextEditingController();
   TextEditingController mesController = TextEditingController();
@@ -35,7 +36,8 @@ class _PageRegistrarState extends State<PageRegistrar> {
     void resetAllControllers() {
       nombreController.clear();
       apellidoController.clear();
-      telefonoEmailController.clear();
+      emailController.clear();
+      telefonoController.clear();
       passwordController.clear();
       diaController.clear();
       mesController.clear();
@@ -46,11 +48,12 @@ class _PageRegistrarState extends State<PageRegistrar> {
       });
     }
 
-    void guardarDatos() {
-      String mensaje = adm.registrarse(
+    void guardarDatos() async {
+      String mensaje = await adm.registrarse(
           nombreController.text,
           apellidoController.text,
-          telefonoEmailController.text,
+          emailController.text,
+          telefonoController.text,
           passwordController.text,
           fechaSeleccionada,
           generoHombre
@@ -58,24 +61,30 @@ class _PageRegistrarState extends State<PageRegistrar> {
               : generoMujer
                   ? "Mujer"
                   : generoOtroController.text);
+
       switch (mensaje) {
         case "casillas":
           SnackbarWidget.showSnackBar(
               context, "ERROR: Hay casillas sin rellenar", true);
+          break;
+
         case "year":
           SnackbarWidget.showSnackBar(
               context, "ERROR: No tienes edad para usar esta app", true);
+          break;
 
-        case "registrados":
+        case "registrado":
           SnackbarWidget.showSnackBar(context,
-              "ERROR: Numero de telefono o Email ya están registrados", true);
+              "ERROR: Número de teléfono o Email ya están registrados", true);
+          break;
 
         case "bien":
           SnackbarWidget.showSnackBar(
               context,
-              "Usuario ${nombreController.text} ${apellidoController.text} registrado con exito",
+              "Usuario ${nombreController.text} ${apellidoController.text} registrado con éxito",
               false);
           resetAllControllers();
+          break;
       }
     }
 
@@ -191,8 +200,17 @@ class _PageRegistrarState extends State<PageRegistrar> {
                 ],
               ),
               const SizedBox(height: 10),
-              myTextfield("numero de celular o correo electronico",
-                  telefonoEmailController, false, "RandomInputs", false),
+              Row(children: [
+                Expanded(
+                  child: myTextfield("correo electronico", emailController,
+                      false, "RandomInputs", false),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: myTextfield("numero de celular", telefonoController,
+                      false, "RandomInputs", false),
+                )
+              ]),
               const SizedBox(height: 10),
               myTextfield("contraseña", passwordController, false,
                   "RandomInputs", true),

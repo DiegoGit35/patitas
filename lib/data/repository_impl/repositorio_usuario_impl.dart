@@ -8,7 +8,7 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
       FirebaseFirestore.instance.collection("Usuario");
 
   @override
-  void agregarUsuario(Usuario nuevoUsuario) async {
+  Future<void> agregarUsuario(Usuario nuevoUsuario) async {
     Map<String, dynamic> usuario = {
       "nombre": nuevoUsuario.nombre,
       "apellido": nuevoUsuario.apellido,
@@ -64,5 +64,33 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
   Future<List<Usuario>> todosLosUsuariosActivos() {
     // TODO: implement todosLosUsuariosActivos
     throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> getUsuarioByEmail(String email) async {
+    try {
+      QuerySnapshot query = await coleccionUsuarios
+          .where("email", isEqualTo: email)
+          .limit(1)
+          .get();
+      return query.docs.isNotEmpty;
+    } catch (e) {
+      print("Error al buscar usuario por email: $e");
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> getUsuarioByTelefono(String telefono) async {
+    try {
+      QuerySnapshot query = await coleccionUsuarios
+          .where("telefono", isEqualTo: telefono)
+          .limit(1)
+          .get();
+      return query.docs.isNotEmpty;
+    } catch (e) {
+      print("Error al buscar usuario por telefono: $e");
+      return false;
+    }
   }
 }
