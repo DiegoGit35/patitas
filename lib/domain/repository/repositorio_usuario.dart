@@ -5,5 +5,7 @@ abstract class RepositorioUsuario {
   void bajarUsuario(int usuarioId);
   Future<List<Usuario>> todosLosUsuarios();
   Future<List<Usuario>> todosLosUsuariosActivos();
-  Future<Usuario> getUsuarioById(int usuarioId);
+  Future<Usuario> getUsuarioById(String usuarioId);
+  Future<bool> usuarioExiste({String? email, String? telefono});
+  Future<Usuario> getUsuarioByEmail(String numeroEmail);
 }

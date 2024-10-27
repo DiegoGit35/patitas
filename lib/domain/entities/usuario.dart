@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/entities/fecha.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 
@@ -33,4 +34,24 @@ class Usuario {
     this.dni,
     this.sexo,
   });
+
+  factory Usuario.fromMap(Map<String, dynamic> map) {
+    return Usuario(
+    // idUsuario: documentId, 
+      nombre: map["nombre"] ?? '',
+      apellido: map["apellido"] ?? '',
+      foto: map["foto"] ?? '',
+      fechaNacimiento: (map["fechaNacimiento"] as Timestamp).toDate(),
+      email: map["email"] ?? '',
+      contrasenia: map["contrasenia"] ?? '',
+      direccion: map["direccion"] ?? '',
+      distrito: map["distrito"] ?? '',
+      telefono: map["telefono"] ?? '',
+      tipo: map["tipo"] == "administrador"
+          ? TipoDeUsuario.administrador
+          : TipoDeUsuario.normal,
+      dni: map["dni"] ?? '',
+      sexo: map["sexo"] ?? '',
+    );
+  }
 }

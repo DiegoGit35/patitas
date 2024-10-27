@@ -30,7 +30,7 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/menu',
-      builder: (context, state) => const Pagemenu(),
+      builder: (context, state) => const PageMenu(),
     ),
     GoRoute(
       path: '/adopcion',
