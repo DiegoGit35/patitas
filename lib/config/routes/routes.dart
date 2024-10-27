@@ -5,6 +5,7 @@ import 'package:patitas/presentation/pages/pageData.dart';
 import 'package:patitas/presentation/pages/pageInicio.dart';
 import 'package:patitas/presentation/pages/pageInicioSesion.dart';
 import 'package:patitas/presentation/pages/pageMenu.dart';
+import 'package:patitas/presentation/pages/pageRegisterAnimal.dart';
 import 'package:patitas/presentation/pages/pageRegistrar.dart';
 import 'package:patitas/presentation/pages/pageTransitar.dart';
 
@@ -40,9 +41,13 @@ GoRouter router = GoRouter(
       builder: (context, state) => const Pagetransitar(),
     ),
     GoRoute(
-      path: '/fechatest',
-      builder: (context, state) => const Fechatest(),
+      path: '/registrarAnimal',
+      builder: (context, state) => const Pageregisteranimal(),
     ),
+    // GoRoute(
+    //   path: '/fechatest',
+    //   builder: (context, state) => const Fechatest(),
+    // ),
   ],
 );
 
