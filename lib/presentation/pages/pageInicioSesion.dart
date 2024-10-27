@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patitas/data/data_sources/adaptador_firebase.dart';
 
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/presentation/widgets/botones.dart';

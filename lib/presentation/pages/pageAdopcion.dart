@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:patitas/data/adaptador.dart';
 
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/domain/entities/caso.dart';
-import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
-import 'package:patitas/presentation/widgets/imagenes.dart';
+
+import '../../domain/use_cases/administracion_patitas.dart';
 
 class Pageadopcion extends StatelessWidget {
   const Pageadopcion({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AdministracionPatitas adminApp = AdministracionPatitas();
+    var listaAdoptables = adminApp.getCasosDeAdopcionNoResueltos();
     return Scaffold(
       backgroundColor: fondoColor,
       appBar: AppBar(
@@ -36,9 +37,9 @@ class Pageadopcion extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: adaptador.listaAnimales.length,
+                itemCount: listaAdoptables.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Caso unAnimal = adaptador.listaAnimales[index];
+                  Caso unAnimal = listaAdoptables[index];
                   return Center(
                     child: Padding(
                         padding: EdgeInsets.all(5),

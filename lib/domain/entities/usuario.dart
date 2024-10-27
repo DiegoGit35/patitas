@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:patitas/domain/entities/fecha.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 
 class Usuario {

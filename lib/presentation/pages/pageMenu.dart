@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
-import 'package:patitas/domain/use_cases/user_manager.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 

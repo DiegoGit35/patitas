@@ -76,20 +76,6 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
   }
 
   @override
-  Future<bool> getUsuarioByTelefono(String telefono) async {
-    try {
-      QuerySnapshot query = await coleccionUsuarios
-          .where("telefono", isEqualTo: telefono)
-          .limit(1)
-          .get();
-      return query.docs.isNotEmpty;
-    } catch (e) {
-      print("Error al buscar usuario por telefono: $e");
-      return false;
-    }
-  }
-
-  @override
   Future<Usuario> getUsuarioByEmail(String email) async {
     try {
       QuerySnapshot query = await coleccionUsuarios
