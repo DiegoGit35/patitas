@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/data/adaptador.dart';
+import 'package:patitas/domain/enums/tipo_de_usuario.dart';
+import 'package:patitas/domain/use_cases/user_manager.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 
-class Pagemenu extends StatelessWidget {
-  const Pagemenu({super.key});
+class PageMenu extends StatelessWidget {
+  const PageMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: fondoColor,
       appBar: AppBar(
-        title: Text("MENU"),
+        title: const Text("MENU"),
       ),
       body: Center(
-        child: containerTwo(context),
+        child: FutureBuilder<Container>(
+          future: containerTwo(context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Ocurrió un error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
+              return snapshot.data!;
+            } else {
+              return const Text("No hay datos disponibles");
+            }
+          },
+        ),
       ),
     );
   }
 }
 
-Container containerTwo(context) {
+Future<Container> containerTwo(context) async {
   return Container(
     height: MediaQuery.of(context).size.height,
     child: Center(
@@ -29,25 +45,61 @@ Container containerTwo(context) {
         children: [
           info(),
           SizedBox(
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                boton("se busca", () {}),
-                const SizedBox(height: 10),
-                boton("adopcion", () {
-                  cambiarPantalla("adopcion");
-                }),
-                const SizedBox(height: 10),
-                boton("transito", () {
-                  cambiarPantalla("transitar");
-                }),
-                const SizedBox(height: 15),
-                boton("cerrar session", () {
-                  cambiarPantalla("inicio");
-                }),
-              ],
+            child: FutureBuilder<TipoDeUsuario>(
+              future: session.getTipoDeUsuario(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+                TipoDeUsuario tipoUsuario = snapshot.data!;
+
+                return Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    boton("se busca", () {}),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: boton("adopcion", () {
+                            cambiarPantalla("adopcion");
+                          }),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: boton("transito", () {
+                            cambiarPantalla("transitar");
+                          }),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    if (tipoUsuario == TipoDeUsuario.administrador) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: boton("Administrar Casos", () {
+                              cambiarPantalla("adopcion");
+                            }),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: boton("Adminsitrar Usuarios", () {
+                              cambiarPantalla("transitar");
+                            }),
+                          )
+                        ],
+                      ),
+                    ],
+                    const SizedBox(height: 15),
+                    boton("cerrar session", () {
+                      cambiarPantalla("inicio");
+                    }),
+                  ],
+                );
+              },
             ),
-          )
+          ),
         ],
       ),
     ),

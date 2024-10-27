@@ -17,6 +17,7 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
       "contrasenia": nuevoUsuario.contrasenia,
       "foto": "assets/default-avatar.png",
       "sexo": nuevoUsuario.sexo,
+      "tipo": nuevoUsuario.tipo == TipoDeUsuario.administrador ? "administrador" : "normal"  
       // "direccion": nuevoUsuario.direccion,
       // "distrito": nuevoUsuario.distrito,
       // "telefono": nuevoUsuario.telefono,
@@ -33,30 +34,16 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
   }
 
   @override
-  Future<Usuario> getUsuarioById(int usuarioId) {
+  Future<Usuario> getUsuarioById(String usuarioId) {
     // TODO: implement getUsuarioById
     throw UnimplementedError();
   }
 
   @override
   Future<List<Usuario>> todosLosUsuarios() async {
-    return (await coleccionUsuarios.get())
-        .docs
-        .map((element) => element.data() as Map<String, dynamic>)
-        .map((dict) => Usuario(
-            idUsuario: dict["idUsuario"],
-            nombre: dict["nombre"],
-            apellido: dict["apellido"],
-            foto: dict["foto"],
-            fechaNacimiento: (dict["fechaNacimiento"] as Timestamp).toDate(),
-            email: dict["email"],
-            contrasenia: dict["contrasenia"],
-            direccion: dict["direccion"],
-            distrito: dict["distrito"],
-            telefono: dict["telefono"],
-            tipo: dict["tipo"] ?? TipoDeUsuario.normal,
-            dni: dict["dni"],
-            sexo: dict["sexo"]))
+    QuerySnapshot snapshot = await coleccionUsuarios.get();
+    return snapshot.docs
+        .map((doc) => Usuario.fromMap(doc.data() as Map<String, dynamic>))
         .toList();
   }
 
@@ -67,15 +54,23 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
   }
 
   @override
-  Future<bool> getUsuarioByEmail(String email) async {
+  Future<bool> usuarioExiste({String? email, String? telefono}) async {
     try {
-      QuerySnapshot query = await coleccionUsuarios
-          .where("email", isEqualTo: email)
-          .limit(1)
-          .get();
+      QuerySnapshot query;
+      if (email!.isNotEmpty) {
+        query = await coleccionUsuarios
+            .where("email", isEqualTo: email)
+            .limit(1)
+            .get();
+      } else {
+        query = await coleccionUsuarios
+            .where("telefono", isEqualTo: telefono)
+            .limit(1)
+            .get();
+      }
       return query.docs.isNotEmpty;
     } catch (e) {
-      print("Error al buscar usuario por email: $e");
+      print("Error al buscar usuario por: $e");
       return false;
     }
   }
@@ -91,6 +86,27 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
     } catch (e) {
       print("Error al buscar usuario por telefono: $e");
       return false;
+    }
+  }
+
+  @override
+  Future<Usuario> getUsuarioByEmail(String email) async {
+    try {
+      QuerySnapshot query = await coleccionUsuarios
+          .where("email", isEqualTo: email)
+          .limit(1)
+          .get();
+      if (query.docs.isNotEmpty) {
+        Map<String, dynamic> userData =
+            query.docs.first.data() as Map<String, dynamic>;
+        Usuario usr = await Usuario.fromMap(userData);
+        return usr;
+      } else {
+        throw Exception("Usuario no encontrado");
+      }
+    } catch (e) {
+      print("Error al buscar usuario por email: $e");
+      throw Exception("Error al buscar usuario");
     }
   }
 }

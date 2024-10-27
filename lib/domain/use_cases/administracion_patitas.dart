@@ -1,7 +1,9 @@
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
+import 'package:patitas/domain/use_cases/user_manager.dart';
 
+import '../../data/adaptador.dart';
 import '../entities/caso.dart';
 
 class AdministracionPatitas {
@@ -23,7 +25,8 @@ class AdministracionPatitas {
       return "year";
     }
 
-    if (await repoUsuario.getUsuarioByEmail(email) || await repoUsuario.getUsuarioByTelefono(telefono)) {
+    if (await repoUsuario.usuarioExiste(email: email) ||
+        await repoUsuario.usuarioExiste(telefono: telefono)) {
       return "registrado";
     }
 
@@ -40,8 +43,23 @@ class AdministracionPatitas {
     return "bien";
   }
 
-  String iniciarSesion(String numeroEmail, String password) {
-    return "";
+  Future<String> iniciarSesion(String numeroEmail, String password) async {
+    if (numeroEmail.isEmpty || password.isEmpty) {
+      return "casillas";
+    }
+    Usuario usuarioBuscado = await repoUsuario.getUsuarioByEmail(numeroEmail);
+    if (usuarioBuscado.email!.isNotEmpty) {
+      if (password == usuarioBuscado.contrasenia) {
+        // final sessionManager = SessionManager();
+        await session.saveUserId("${usuarioBuscado.email}");
+        // print("from CU: ${await session.getUserId()}");
+        return "bien";
+      } else {
+        return "passNull";
+      }
+    } else {
+      return "usuarioNull";
+    }
   }
 
   Future<List<Usuario>> getTodosLosUsuariosActivos() async {

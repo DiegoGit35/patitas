@@ -54,7 +54,8 @@ class Pagedata extends StatelessWidget {
                     "Teléfono o email: ${unUsuario.email}\n"
                     "Password: ${unUsuario.contrasenia}\n"
                     "Fecha de nacimiento: ${unUsuario.fechaNacimiento}\n"
-                    "Género: ${unUsuario.sexo}",
+                    "Género: ${unUsuario.sexo}\n"
+                    "Tipo: ${unUsuario.tipo}",
                   ),
                 );
               },
