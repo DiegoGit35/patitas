@@ -3,12 +3,10 @@ import '../enums/tipo_de_caso.dart';
 import 'usuario.dart';
 
 class Caso {
-  String direccion, distrito, contacto, foto;
-  String? fechaBaja, fechaRegistro, fechaResolucion;
+  String direccion, distrito, contacto, foto, usuarioRegistrante;
+  String? fechaBaja, fechaRegistro, fechaResolucion, usuarioAdoptante;
   TipoDeCaso tipoDeCaso;
   EstadoDeCaso? estado;
-  Usuario usuarioRegistrante;
-  Usuario? usuarioAdoptante;
   int? idCaso;
 
   Caso({
@@ -37,10 +35,10 @@ class Caso {
         fechaBaja: map["fechaBaja"],
         fechaResolucion: map["fechaResolucion"],
         tipoDeCaso: map["tipo"] == "adopcion"
-            ? TipoDeCaso.adopcion
+            ? TipoDeCaso.Adopcion
             : map["tipo"] == "busqueda"
-                ? TipoDeCaso.busqueda
-                : TipoDeCaso.transito,
+                ? TipoDeCaso.Busqueda
+                : TipoDeCaso.Transito,
         usuarioRegistrante: map["usuarioRegistrante"],
         usuarioAdoptante: map["usuarioAdoptante"],
         estado: map["estado"] == "pendiente"

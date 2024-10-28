@@ -12,7 +12,9 @@ class Pageadopcion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AdministracionPatitas adminApp = AdministracionPatitas();
-    var listaAdoptables = adminApp.getCasosDeAdopcionNoResueltos();
+    Future<List<Caso>> listaAdoptables =
+        adminApp.getCasosDeAdopcionNoResueltos();
+
     return Scaffold(
       backgroundColor: fondoColor,
       appBar: AppBar(
@@ -32,21 +34,41 @@ class Pageadopcion extends StatelessWidget {
                 25,
                 Colors.black,
                 false),
-            Container(
-              height: 460,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: listaAdoptables.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Caso unAnimal = listaAdoptables[index];
-                  return Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(5),
-                        child: animalItem(unAnimal)),
+            FutureBuilder<List<Caso>>(
+              future: listaAdoptables,
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Caso>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Mostrar un indicador de carga mientras se espera la respuesta
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // Mostrar un mensaje de error en caso de fallo
+                  return Text("Error: ${snapshot.error}");
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  // Mostrar un mensaje en caso de que no haya datos disponibles
+                  return Text("No hay casos disponibles para adopción.");
+                } else {
+                  // Si hay datos, construir el ListView
+                  List<Caso> casos = snapshot.data!;
+                  return Container(
+                    height: 460,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: casos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Caso unAnimal = casos[index];
+                        return Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: animalItem(unAnimal),
+                          ),
+                        );
+                      },
+                    ),
                   );
-                },
-              ),
+                }
+              },
             ),
           ],
         ),

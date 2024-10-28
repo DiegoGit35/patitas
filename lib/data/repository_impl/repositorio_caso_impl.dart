@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/entities/caso.dart';
-import 'package:patitas/domain/enums/estado_de_caso.dart';
 import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/repository/repositorio_caso.dart';
 
@@ -16,9 +15,9 @@ class RepositorioCasoImpl implements RepositorioCaso {
       "contacto": nuevoCaso.contacto,
       "foto": nuevoCaso.foto,
       "fechaRegistro": DateTime.now().toString(),
-      "tipoDeCaso": nuevoCaso.tipoDeCaso == TipoDeCaso.adopcion
+      "tipoDeCaso": nuevoCaso.tipoDeCaso == TipoDeCaso.Adopcion
           ? "adopcion"
-          : nuevoCaso.tipoDeCaso == TipoDeCaso.transito
+          : nuevoCaso.tipoDeCaso == TipoDeCaso.Transito
               ? "transito"
               : "busqueda",
       "usuarioRegistrante": nuevoCaso.usuarioRegistrante,

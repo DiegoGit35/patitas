@@ -1,5 +1,5 @@
 enum TipoDeCaso {
-  adopcion,
-  transito,
-  busqueda,
+  Adopcion,
+  Transito,
+  Busqueda,
 }

@@ -1,5 +1,6 @@
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
+import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/repository/repositorio_caso.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
 
@@ -73,7 +74,29 @@ class AdministracionPatitas {
 
   void transitar() {}
 
-  registrarNuevoCaso() {}
+  Future<String> registrarNuevoCaso({
+    required String direccion,
+    required String distrito,
+    required String contacto,
+    required TipoDeCaso tipoDeCaso,
+    required String emailUsuarioRegistrante,
+  }) async {
+    // Usuario usuarioRegistrante =
+    //     await repoUsuario.getUsuarioByEmail(emailUsuarioRegistrante);
+    repoCaso.agregarCaso(
+      Caso(
+        direccion: direccion,
+        distrito: distrito,
+        contacto: contacto,
+        foto:  "assets/imagenes/3.jpg",
+        tipoDeCaso: tipoDeCaso,
+        usuarioRegistrante: emailUsuarioRegistrante,
+        fechaRegistro: DateTime.now().toString(),
+      ),
+    );
+
+    return 'bien';
+  }
 
   registrarResolucionDeCaso(Caso caso, Usuario usuarioAdoptante) {}
 
