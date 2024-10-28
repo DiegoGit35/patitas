@@ -15,9 +15,9 @@ class RepositorioCasoImpl implements RepositorioCaso {
       "contacto": nuevoCaso.contacto,
       "foto": nuevoCaso.foto,
       "fechaRegistro": DateTime.now().toString(),
-      "tipoDeCaso": nuevoCaso.tipoDeCaso == TipoDeCaso.Adopcion
+      "tipoDeCaso": nuevoCaso.tipoDeCaso == TipoDeCaso.adopcion
           ? "adopcion"
-          : nuevoCaso.tipoDeCaso == TipoDeCaso.Transito
+          : nuevoCaso.tipoDeCaso == TipoDeCaso.transito
               ? "transito"
               : "busqueda",
       "usuarioRegistrante": nuevoCaso.usuarioRegistrante,

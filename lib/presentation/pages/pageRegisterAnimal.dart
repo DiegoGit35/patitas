@@ -26,7 +26,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
   TextEditingController distrito = TextEditingController();
   TextEditingController contacto = TextEditingController();
   TextEditingController foto = TextEditingController();
-  TipoDeCaso tipoDeCasoSeleccionado = TipoDeCaso.Adopcion;
+  TipoDeCaso tipoDeCasoSeleccionado = TipoDeCaso.adopcion;
   Distrito distritoSeleccionado = Distrito.chilecito;
 
   @override
@@ -40,10 +40,9 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
     }
 
     void guardarDatos() async {
-      print("el mail es: ${await session.getUserId()}");
       String mensaje = await adm.registrarNuevoCaso(
         direccion: direccion.text,
-        distrito: distrito.text,
+        distrito: distritoSeleccionado.formattedName,
         contacto: contacto.text,
         tipoDeCaso: tipoDeCasoSeleccionado,
         emailUsuarioRegistrante: "${await session.getUserId()}",
@@ -51,7 +50,6 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
 
       switch (mensaje) {
         case "bien":
-          print("llego hasta aca");
           SnackbarWidget.showSnackBar(context,
               "Caso $tipoDeCasoSeleccionado registrado con éxito", false);
           resetAllControllers();
@@ -153,7 +151,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
     return TipoDeCaso.values.map((TipoDeCaso tipo) {
       return DropdownMenuItem<TipoDeCaso>(
         value: tipo,
-        child: Text(tipo.name),
+        child: Text(tipo.formattedName),
       );
     }).toList();
   }
@@ -182,7 +180,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
     return Distrito.values.map((Distrito distrito) {
       return DropdownMenuItem<Distrito>(
         value: distrito,
-        child: Text(distrito.formattedName), // Usa formattedName
+        child: Text(distrito.formattedName), 
       );
     }).toList();
   }
