@@ -45,32 +45,6 @@ Future<Container> containerTwo(context) async {
         children: [
           info(context),
           SizedBox(
-<<<<<<< HEAD
-            width: MediaQuery.of(context).size.width / 2,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                boton("se busca", () {}),
-                const SizedBox(height: 10),
-                boton("adopcion", () {
-                  cambiarPantalla("adopcion");
-                }),
-                const SizedBox(height: 10),
-                boton("transito", () {
-                  cambiarPantalla("transitar");
-                }),
-                const SizedBox(height: 10),
-                boton("agregar animalito", () {
-                  cambiarPantalla("registrarAnimal");
-                }),
-                const SizedBox(height: 15),
-                boton("cerrar session", () {
-                  cambiarPantalla("inicio");
-                }),
-              ],
-=======
             child: FutureBuilder<TipoDeUsuario>(
               future: session.getTipoDeUsuario(),
               builder: (context, snapshot) {
@@ -124,7 +98,6 @@ Future<Container> containerTwo(context) async {
                   ],
                 );
               },
->>>>>>> 9c115f433076bbd88ba871fa8f5c598225adb0b7
             ),
           ),
         ],
