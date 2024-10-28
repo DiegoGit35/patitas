@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:patitas/data/adaptador.dart';
 
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/domain/entities/caso.dart';
-import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
-import 'package:patitas/presentation/widgets/imagenes.dart';
+
+import '../../domain/use_cases/administracion_patitas.dart';
 
 class Pageadopcion extends StatelessWidget {
   const Pageadopcion({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AdministracionPatitas adminApp = AdministracionPatitas();
+    Future<List<Caso>> listaAdoptables =
+        adminApp.getCasosDeAdopcionNoResueltos();
+
     return Scaffold(
       backgroundColor: fondoColor,
       appBar: AppBar(
@@ -31,21 +34,41 @@ class Pageadopcion extends StatelessWidget {
                 25,
                 Colors.black,
                 false),
-            Container(
-              height: 460,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: adaptador.listaAnimales.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Caso unAnimal = adaptador.listaAnimales[index];
-                  return Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(5),
-                        child: animalItem(unAnimal)),
+            FutureBuilder<List<Caso>>(
+              future: listaAdoptables,
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Caso>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Mostrar un indicador de carga mientras se espera la respuesta
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // Mostrar un mensaje de error en caso de fallo
+                  return Text("Error: ${snapshot.error}");
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  // Mostrar un mensaje en caso de que no haya datos disponibles
+                  return Text("No hay casos disponibles para adopción.");
+                } else {
+                  // Si hay datos, construir el ListView
+                  List<Caso> casos = snapshot.data!;
+                  return Container(
+                    height: 460,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: casos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Caso unAnimal = casos[index];
+                        return Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: animalItem(unAnimal),
+                          ),
+                        );
+                      },
+                    ),
                   );
-                },
-              ),
+                }
+              },
             ),
           ],
         ),

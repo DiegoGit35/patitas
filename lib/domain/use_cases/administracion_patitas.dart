@@ -1,13 +1,16 @@
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
+import 'package:patitas/domain/enums/tipo_de_caso.dart';
+import 'package:patitas/domain/repository/repositorio_caso.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
-import 'package:patitas/domain/use_cases/user_manager.dart';
 
 import '../../data/adaptador.dart';
+import '../../data/repository_impl/repositorio_caso_impl.dart';
 import '../entities/caso.dart';
 
 class AdministracionPatitas {
   RepositorioUsuario repoUsuario = RepositorioUsuarioImpl();
+  RepositorioCaso repoCaso = RepositorioCasoImpl();
   Future<String> registrarse(String nombre, String apellido, String email,
       String telefono, String password, DateTime fechaNa, String genero) async {
     int yearMax = 2023 - 18;
@@ -71,11 +74,35 @@ class AdministracionPatitas {
 
   void transitar() {}
 
-  registrarNuevoCaso() {}
+  Future<String> registrarNuevoCaso({
+    required String direccion,
+    required String distrito,
+    required String contacto,
+    required TipoDeCaso tipoDeCaso,
+    required String emailUsuarioRegistrante,
+  }) async {
+    // Usuario usuarioRegistrante =
+    //     await repoUsuario.getUsuarioByEmail(emailUsuarioRegistrante);
+    repoCaso.agregarCaso(
+      Caso(
+        direccion: direccion,
+        distrito: distrito,
+        contacto: contacto,
+        foto:  "assets/imagenes/3.jpg",
+        tipoDeCaso: tipoDeCaso,
+        usuarioRegistrante: emailUsuarioRegistrante,
+        fechaRegistro: DateTime.now().toString(),
+      ),
+    );
+
+    return 'bien';
+  }
 
   registrarResolucionDeCaso(Caso caso, Usuario usuarioAdoptante) {}
 
-  getCasosDeAdopcionNoResueltos() {}
+  Future<List<Caso>> getCasosDeAdopcionNoResueltos() {
+    return repoCaso.todosLosCasosPendientes();
+  }
 
   getCasosDeAdopcionResueltos() {}
 

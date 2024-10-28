@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
-import 'package:patitas/domain/use_cases/user_manager.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 
@@ -58,38 +57,24 @@ Future<Container> containerTwo(context) async {
                     const SizedBox(height: 10),
                     boton("se busca", () {}),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: boton("adopcion", () {
-                            cambiarPantalla("adopcion");
-                          }),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: boton("transito", () {
-                            cambiarPantalla("transitar");
-                          }),
-                        )
-                      ],
-                    ),
+                      boton("adopcion", () {
+                        cambiarPantalla("adopcion");
+                      }),
+                    const SizedBox(width: 10),
+                    const SizedBox(height: 10),
+                    boton("transito", () {
+                        cambiarPantalla("transitar");
+                      }),
                     const SizedBox(height: 10),
                     if (tipoUsuario == TipoDeUsuario.administrador) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: boton("Administrar Casos", () {
-                              cambiarPantalla("adopcion");
-                            }),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: boton("Adminsitrar Usuarios", () {
-                              cambiarPantalla("transitar");
-                            }),
-                          )
-                        ],
-                      ),
+                      boton("agregar animalito", () {
+                          cambiarPantalla("registrarAnimal");
+                        }),
+                    const SizedBox(height: 10),
+                      const SizedBox(width: 10),
+                      boton("Adminsitrar Usuarios", () {
+                          cambiarPantalla("transitar");
+                        }),
                     ],
                     const SizedBox(height: 15),
                     boton("cerrar session", () {
