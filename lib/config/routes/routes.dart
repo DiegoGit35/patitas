@@ -12,7 +12,7 @@ import 'package:patitas/presentation/pages/pageTransitar.dart';
 import '../../presentation/pages/pageRegistrar.dart';
 
 GoRouter router = GoRouter(
-  initialLocation: "/inicio",
+  initialLocation: "/caso",
   routes: [
     GoRoute(
       path: '/inicio',

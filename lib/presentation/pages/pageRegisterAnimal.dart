@@ -29,8 +29,6 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
   TipoDeCaso tipoDeCasoSeleccionado = TipoDeCaso.adopcion;
   Distrito distritoSeleccionado = Distrito.chilecito;
 
-  bool botonActivado = false;
-
   @override
   Widget build(BuildContext context) {
     AdministracionPatitas adm = AdministracionPatitas();
@@ -78,15 +76,9 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
         ]
       };
       return TextFormField(
-        // validator: (value) {
-        //   if (value == null || value.isEmpty) {
-        //     return "ERROR";
-        //   }
-        //   setState(() {
-        //     botonActivado = true;
-        //   });
-        //   return null;
-        // },
+        onChanged: (value) {
+          if (value.isNotEmpty) {}
+        },
         inputFormatters: listImputs[type],
         controller: control,
         obscureText: taparTexto,
