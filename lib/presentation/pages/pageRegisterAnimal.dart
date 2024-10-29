@@ -29,6 +29,8 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
   TipoDeCaso tipoDeCasoSeleccionado = TipoDeCaso.adopcion;
   Distrito distritoSeleccionado = Distrito.chilecito;
 
+  bool botonActivado = false;
+
   @override
   Widget build(BuildContext context) {
     AdministracionPatitas adm = AdministracionPatitas();
@@ -49,6 +51,10 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
       );
 
       switch (mensaje) {
+        case "casillas":
+          SnackbarWidget.showSnackBar(
+              context, "ERROR: Hay casillas sin rellenar", true);
+          break;
         case "bien":
           SnackbarWidget.showSnackBar(context,
               "Caso $tipoDeCasoSeleccionado registrado con éxito", false);
@@ -57,7 +63,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
       }
     }
 
-    Widget myTextfield(
+    Widget myTextFormField(
         String text, control, bool rCheck, String type, bool taparTexto) {
       Map<String, dynamic> listImputs = {
         "Onlytext": [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
@@ -71,7 +77,16 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
           LengthLimitingTextInputFormatter(2),
         ]
       };
-      return TextField(
+      return TextFormField(
+        // validator: (value) {
+        //   if (value == null || value.isEmpty) {
+        //     return "ERROR";
+        //   }
+        //   setState(() {
+        //     botonActivado = true;
+        //   });
+        //   return null;
+        // },
         inputFormatters: listImputs[type],
         controller: control,
         obscureText: taparTexto,
@@ -121,7 +136,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
               Row(
                 children: [
                   Expanded(
-                      child: myTextfield("Direccion", direccion, false,
+                      child: myTextFormField("Direccion", direccion, false,
                           "RandomInputs", false)),
                   const SizedBox(width: 10),
                   Expanded(child: _distrito()),
@@ -130,7 +145,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
               const SizedBox(height: 10),
               Row(children: [
                 Expanded(
-                  child: myTextfield(
+                  child: myTextFormField(
                       "Celular", contacto, false, "RandomInputs", false),
                 ),
                 const SizedBox(width: 10),
@@ -180,7 +195,7 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
     return Distrito.values.map((Distrito distrito) {
       return DropdownMenuItem<Distrito>(
         value: distrito,
-        child: Text(distrito.formattedName), 
+        child: Text(distrito.formattedName),
       );
     }).toList();
   }

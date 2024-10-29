@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/data/adaptador.dart';
+import 'package:patitas/domain/entities/caso.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
@@ -44,45 +45,53 @@ Future<Container> containerTwo(context) async {
         children: [
           info(context),
           SizedBox(
-            child: FutureBuilder<TipoDeUsuario>(
-              future: session.getTipoDeUsuario(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const CircularProgressIndicator();
-                }
-                TipoDeUsuario tipoUsuario = snapshot.data!;
+            width: MediaQuery.of(context).size.width / 2,
+            child: Align(
+              child: FutureBuilder<TipoDeUsuario>(
+                future: session.getTipoDeUsuario(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: CircularProgressIndicator());
+                  }
 
-                return Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    boton("se busca", () {}),
-                    const SizedBox(height: 10),
+                  TipoDeUsuario tipoUsuario = snapshot.data!;
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 10),
+                      boton("se busca", () {}),
+                      const SizedBox(height: 10),
                       boton("adopcion", () {
                         cambiarPantalla("adopcion");
                       }),
-                    const SizedBox(width: 10),
-                    const SizedBox(height: 10),
-                    boton("transito", () {
+                      const SizedBox(width: 10),
+                      const SizedBox(height: 10),
+                      boton("transito", () {
                         cambiarPantalla("transitar");
                       }),
-                    const SizedBox(height: 10),
-                    if (tipoUsuario == TipoDeUsuario.administrador) ...[
-                      boton("agregar animalito", () {
+                      const SizedBox(height: 10),
+                      if (tipoUsuario == TipoDeUsuario.administrador) ...[
+                        boton("agregar animalito", () {
                           cambiarPantalla("registrarAnimal");
                         }),
-                    const SizedBox(height: 10),
-                      const SizedBox(width: 10),
-                      boton("Adminsitrar Usuarios", () {
+                        const SizedBox(height: 10),
+                        const SizedBox(width: 10),
+                        boton("Adminsitrar Usuarios", () {
                           cambiarPantalla("transitar");
                         }),
+                      ],
+                      const SizedBox(height: 15),
+                      boton("cerrar session", () {
+                        cambiarPantalla("inicio");
+                      }),
                     ],
-                    const SizedBox(height: 15),
-                    boton("cerrar session", () {
-                      cambiarPantalla("inicio");
-                    }),
-                  ],
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ],

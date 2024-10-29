@@ -16,6 +16,8 @@ class PageRegistrar extends StatefulWidget {
 }
 
 class _PageRegistrarState extends State<PageRegistrar> {
+  // botones de adopcion y transito en menu
+  // nueva pantalla para adoptar
   bool generoHombre = false;
   bool generoMujer = false;
   DateTime fechaSeleccionada = DateTime.now();

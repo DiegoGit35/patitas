@@ -83,12 +83,18 @@ class AdministracionPatitas {
   }) async {
     // Usuario usuarioRegistrante =
     //     await repoUsuario.getUsuarioByEmail(emailUsuarioRegistrante);
+
+    // verifica las casillas, si estan vacias devuelve un mensaje
+    if (direccion.isEmpty || contacto.isEmpty) {
+      return "casillas";
+    }
+
     repoCaso.agregarCaso(
       Caso(
         direccion: direccion,
         distrito: distrito,
         contacto: contacto,
-        foto:  "assets/imagenes/3.jpg",
+        foto: "assets/imagenes/3.jpg",
         tipoDeCaso: tipoDeCaso,
         usuarioRegistrante: emailUsuarioRegistrante,
         fechaRegistro: DateTime.now().toString(),
