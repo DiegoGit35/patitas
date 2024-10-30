@@ -5,6 +5,7 @@ import 'package:patitas/domain/use_cases/administracion_patitas.dart';
 import 'package:patitas/presentation/pages/pageAdopcion.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
+import 'package:patitas/presentation/widgets/snakbar.dart';
 
 class Pagecaso extends StatefulWidget {
   final Caso unCaso;
@@ -19,21 +20,69 @@ class _PagecasoState extends State<Pagecaso> {
 
   AdministracionPatitas adm = AdministracionPatitas();
 
-  void _funcionBoton() async {
+  void _funcionBoton(context) async {
     print(".................ADOPTANDO...............");
     setState(() {
-      print("hola desde el state");
       adoptando = true;
     });
 
     String mensaje = await adm.adoptar(widget.unCaso);
+    //--------- DESMARCAR ESTO CUANDO YA SE PUEDA MODIFICAR EL ESTADO DE UN CASO
+    //----------vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv----------
+    // switch (mensaje) {
+    //   case "adoptado":
+    //     SnackbarWidget.showSnackBar(context,
+    //         "QUE MAL!!!, EL ANIMAL YA FUE ADOPTADO POR OTRA PERSONA", true);
+    //     break;
+    //   case "bien":
+    //     SnackbarWidget.showSnackBar(
+    //         context, "FELICIDADES!!!! HAS ADOPTADO UN ANIMAL :)", false);
+    //     break;
+    // }
+
+    // setState(() {
+    //   adoptando = false;
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    DateTime dateTimeRegister = DateTime.parse(widget.unCaso.fechaRegistro!);
-    DateTime datetimeNow = DateTime.now();
-    Duration diferencia = datetimeNow.difference(dateTimeRegister);
+    String tiempoRegistrado() {
+      DateTime dateTimeRegister = DateTime.parse(widget.unCaso.fechaRegistro!);
+      print("${widget.unCaso.fechaRegistro}");
+      DateTime datetimeNow = DateTime.now();
+      Duration diferencia = datetimeNow.difference(dateTimeRegister);
+      if (diferencia.inDays > 0) {
+        if (diferencia.inDays == 1) {
+          return "Hace ${diferencia.inDays} dia";
+        }
+        return "Hace ${diferencia.inDays} dias";
+      }
+
+      if (diferencia.inHours > 0) {
+        if (diferencia.inHours == 1) {
+          return "Hace ${diferencia.inHours} hora";
+        }
+        return "Hace ${diferencia.inHours} horas";
+      }
+
+      if (diferencia.inMinutes > 0) {
+        if (diferencia.inMinutes == 1) {
+          return "Hace ${diferencia.inMinutes} minuto";
+        }
+        return "Hace ${diferencia.inMinutes} minutos";
+      }
+
+      if (diferencia.inSeconds > 0) {
+        if (diferencia.inSeconds == 1) {
+          return "Hace ${diferencia.inSeconds} segundo";
+        }
+        return "Hace ${diferencia.inSeconds} segundos";
+      }
+
+      return "Recien Agregado";
+    }
+
     return Scaffold(
       backgroundColor: fondoColor,
       appBar: AppBar(
@@ -60,12 +109,12 @@ class _PagecasoState extends State<Pagecaso> {
                   _textDatos(
                       "registrado por", "${widget.unCaso.usuarioAdoptante}"),
                   const Divider(),
-                  _textDatos("hace", "${diferencia.inDays} dias"),
+                  _textDatos("hace", tiempoRegistrado()),
                   const Divider(),
                   const SizedBox(height: 10),
                   // boton("adoptar", () {})
                   _botonAdoptar(adoptando, () {
-                    _funcionBoton();
+                    _funcionBoton(context);
                   })
                 ],
               ),
