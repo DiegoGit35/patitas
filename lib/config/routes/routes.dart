@@ -12,7 +12,7 @@ import 'package:patitas/presentation/pages/pageTransitar.dart';
 import '../../presentation/pages/pageRegistrar.dart';
 
 GoRouter router = GoRouter(
-  initialLocation: "/caso",
+  initialLocation: "/inicio",
   routes: [
     GoRoute(
       path: '/inicio',
@@ -36,7 +36,7 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/adopcion',
-      builder: (context, state) => const Pageadopcion(),
+      builder: (context, state) => const PageAdopcion(),
     ),
     GoRoute(
       path: '/transitar',
@@ -46,10 +46,10 @@ GoRouter router = GoRouter(
       path: '/registrarAnimal',
       builder: (context, state) => const Pageregisteranimal(),
     ),
-    GoRoute(
-      path: '/caso',
-      builder: (context, state) => Pagecaso(),
-    ),
+    // GoRoute(
+    //   path: '/caso',
+    //   builder: (context, state) => Pagecaso(unCaso: ,),
+    // ),
     // GoRoute(
     //   path: '/fechatest',
     //   builder: (context, state) => const Fechatest(),

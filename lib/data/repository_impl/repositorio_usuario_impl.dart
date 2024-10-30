@@ -17,7 +17,9 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
       "contrasenia": nuevoUsuario.contrasenia,
       "foto": "assets/default-avatar.png",
       "sexo": nuevoUsuario.sexo,
-      "tipo": nuevoUsuario.tipo == TipoDeUsuario.administrador ? "administrador" : "normal"  
+      "tipo": nuevoUsuario.tipo == TipoDeUsuario.administrador
+          ? "administrador"
+          : "normal"
       // "direccion": nuevoUsuario.direccion,
       // "distrito": nuevoUsuario.distrito,
       // "telefono": nuevoUsuario.telefono,

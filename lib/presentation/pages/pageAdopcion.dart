@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/domain/entities/caso.dart';
+import 'package:patitas/presentation/pages/pageCaso.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 
 import '../../domain/use_cases/administracion_patitas.dart';
 
-class Pageadopcion extends StatelessWidget {
-  const Pageadopcion({super.key});
+class PageAdopcion extends StatelessWidget {
+  const PageAdopcion({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +61,8 @@ class Pageadopcion extends StatelessWidget {
                         Caso unAnimal = casos[index];
                         return Center(
                           child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: animalItem(unAnimal),
+                            padding: const EdgeInsets.all(5),
+                            child: animalItem(unAnimal, context),
                           ),
                         );
                       },
@@ -88,12 +89,17 @@ Text texto(String texto, double size, Color color, bool masGrueso) {
   );
 }
 
-Container animalItem(Caso unAnimal) {
+Container animalItem(Caso unAnimal, context) {
   return Container(
     width: 300,
     height: 400,
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Pagecaso(unCaso: unAnimal)));
+      },
       style: ElevatedButton.styleFrom(
         shape:
             ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),

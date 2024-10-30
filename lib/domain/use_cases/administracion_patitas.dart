@@ -1,5 +1,6 @@
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
+import 'package:patitas/domain/enums/estado_de_caso.dart';
 import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/repository/repositorio_caso.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
@@ -70,7 +71,16 @@ class AdministracionPatitas {
     return usuarios;
   }
 
-  void adoptar() {}
+  Future<String> adoptar(Caso unCaso) async {
+    List<Caso> listaCasos = await getCasosDeAdopcionNoResueltos();
+    for (Caso casoDB in listaCasos) {
+      if (unCaso.estado == EstadoDeCaso.adoptado) {
+        return "adoptado";
+      }
+    }
+
+    return "bien";
+  }
 
   void transitar() {}
 
