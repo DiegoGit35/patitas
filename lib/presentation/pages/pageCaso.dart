@@ -29,20 +29,20 @@ class _PagecasoState extends State<Pagecaso> {
     String mensaje = await adm.adoptar(widget.unCaso);
     //--------- DESMARCAR ESTO CUANDO YA SE PUEDA MODIFICAR EL ESTADO DE UN CASO
     //----------vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv----------
-    // switch (mensaje) {
-    //   case "adoptado":
-    //     SnackbarWidget.showSnackBar(context,
-    //         "QUE MAL!!!, EL ANIMAL YA FUE ADOPTADO POR OTRA PERSONA", true);
-    //     break;
-    //   case "bien":
-    //     SnackbarWidget.showSnackBar(
-    //         context, "FELICIDADES!!!! HAS ADOPTADO UN ANIMAL :)", false);
-    //     break;
-    // }
+    switch (mensaje) {
+      case "YaAdoptado":
+        SnackbarWidget.showSnackBar(context,
+            "QUE MAL!!!, EL ANIMAL YA FUE ADOPTADO POR OTRA PERSONA", true);
+        break;
+      case "bien":
+        SnackbarWidget.showSnackBar(
+            context, "FELICIDADES!!!! HAS ADOPTADO UN ANIMAL :)", false);
+        break;
+    }
 
-    // setState(() {
-    //   adoptando = false;
-    // });
+    setState(() {
+      adoptando = false;
+    });
   }
 
   @override

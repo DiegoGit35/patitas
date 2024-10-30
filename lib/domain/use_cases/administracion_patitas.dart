@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/domain/enums/estado_de_caso.dart';
@@ -72,14 +73,16 @@ class AdministracionPatitas {
   }
 
   Future<String> adoptar(Caso unCaso) async {
-    List<Caso> listaCasos = await getCasosDeAdopcionNoResueltos();
-    for (Caso casoDB in listaCasos) {
-      if (unCaso.estado == EstadoDeCaso.adoptado) {
-        return "adoptado";
+    print("entrando a funcion adoptar");
+    List<Caso> listaCasos = await repoCaso.todosLosCasosPendientes();
+    for (Caso casoBD in listaCasos) {
+      if (casoBD.idCaso == unCaso.idCaso &&
+          casoBD.estado == EstadoDeCaso.pendiente) {
+        repoCaso.actualizarDatosCasos("estado", "adoptado", unCaso.idCaso!);
+        return "bien";
       }
     }
-
-    return "bien";
+    return "YaAdoptado";
   }
 
   void transitar() {}
@@ -91,10 +94,6 @@ class AdministracionPatitas {
     required TipoDeCaso tipoDeCaso,
     required String emailUsuarioRegistrante,
   }) async {
-    // Usuario usuarioRegistrante =
-    //     await repoUsuario.getUsuarioByEmail(emailUsuarioRegistrante);
-
-    // verifica las casillas, si estan vacias devuelve un mensaje
     if (direccion.isEmpty || contacto.isEmpty) {
       return "casillas";
     }

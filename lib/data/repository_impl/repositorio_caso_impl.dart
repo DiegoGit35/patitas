@@ -26,7 +26,9 @@ class RepositorioCasoImpl implements RepositorioCaso {
       // "fechaResolucion": nuevoCaso.fechaResolucion,
     };
 
-    await coleccionCasos.add(caso);
+    DocumentReference documentReference = await coleccionCasos.add(caso);
+
+    await documentReference.update({"idCaso": documentReference.id});
   }
 
   @override
@@ -64,5 +66,27 @@ class RepositorioCasoImpl implements RepositorioCaso {
       print("Error al buscar casos pendientes!");
       throw Exception("Error al buscar caso");
     }
+  }
+
+  @override
+  Future<String> obtenerIDDocumento(String idCaso) async {
+    QuerySnapshot querySnapshot = await coleccionCasos.get();
+    for (var element in querySnapshot.docs) {
+      Map<String, dynamic> datos = element.data() as Map<String, dynamic>;
+      if (datos["idCaso"] == idCaso) {
+        return element.id;
+      }
+    }
+    return "";
+  }
+
+  @override
+  void actualizarDatosCasos(
+      String atributoName, dynamic newData, String idCasoDocument) async {
+    // Map<String,Map<String,dynamic>> atributos = {
+    //   "direccion" : {"direccion" : newD}
+    // };
+
+    await coleccionCasos.doc(idCasoDocument).update({atributoName: newData});
   }
 }
