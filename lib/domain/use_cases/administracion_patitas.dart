@@ -76,8 +76,7 @@ class AdministracionPatitas {
     print("entrando a funcion adoptar");
     List<Caso> listaCasos = await repoCaso.todosLosCasosPendientes();
     for (Caso casoBD in listaCasos) {
-      if (casoBD.idCaso == unCaso.idCaso &&
-          casoBD.estado == EstadoDeCaso.pendiente) {
+      if (casoBD.idCaso == unCaso.idCaso) {
         repoCaso.actualizarDatosCasos("estado", "adoptado", unCaso.idCaso!);
         return "bien";
       }
