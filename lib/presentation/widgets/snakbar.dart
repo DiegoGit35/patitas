@@ -12,6 +12,7 @@ class SnackbarWidget {
       backgroundColor: isError ? Colors.red : Colors.green,
       action: SnackBarAction(
         label: 'quitar',
+        textColor: Colors.white,
         onPressed: () {},
       ),
     );

@@ -3,6 +3,7 @@ import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/domain/entities/caso.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
+import 'package:patitas/presentation/widgets/boton_menu.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 
@@ -63,31 +64,44 @@ Future<Container> containerTwo(context) async {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 10),
-                      boton("se busca", () {}),
+                      BotonMenu(
+                          tittle: "se busca",
+                          icon: Icons.search,
+                          funcion: () {}),
                       const SizedBox(height: 10),
-                      boton("adopcion", () {
-                        cambiarPantalla("adopcion");
-                      }),
+                      BotonMenu(
+                        tittle: "en adopcion",
+                        icon: Icons.pets,
+                        funcion: () => cambiarPantalla("adopcion"),
+                      ),
                       const SizedBox(width: 10),
                       const SizedBox(height: 10),
-                      boton("transito", () {
-                        cambiarPantalla("transitar");
-                      }),
+                      BotonMenu(
+                        tittle: "transitar",
+                        icon: Icons.date_range,
+                        funcion: () => cambiarPantalla("transitar"),
+                      ),
                       const SizedBox(height: 10),
                       if (tipoUsuario == TipoDeUsuario.administrador) ...[
-                        boton("agregar animalito", () {
-                          cambiarPantalla("registrarAnimal");
-                        }),
+                        BotonMenu(
+                          tittle: "registrar un animal",
+                          icon: Icons.add,
+                          funcion: () => cambiarPantalla("registrarAnimal"),
+                        ),
                         const SizedBox(height: 10),
                         const SizedBox(width: 10),
-                        boton("Adminsitrar Usuarios", () {
-                          cambiarPantalla("transitar");
-                        }),
+                        BotonMenu(
+                          tittle: "administrar usuario",
+                          icon: Icons.person,
+                          funcion: () {},
+                        ),
                       ],
                       const SizedBox(height: 15),
-                      boton("cerrar session", () {
-                        cambiarPantalla("inicio");
-                      }),
+                      BotonMenu(
+                        tittle: "cerrar sesion",
+                        icon: Icons.logout,
+                        funcion: () => cambiarPantalla("inicio"),
+                      ),
                     ],
                   );
                 },

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/entities/caso.dart';
+import 'package:patitas/domain/enums/distrito.dart';
 import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/repository/repositorio_caso.dart';
 
@@ -22,6 +23,7 @@ class RepositorioCasoImpl implements RepositorioCaso {
               : "busqueda",
       "usuarioRegistrante": nuevoCaso.usuarioRegistrante,
       "estado": "pendiente",
+      "distrito": nuevoCaso.distrito
       // "fechaBaja": nuevoCaso.fechaBaja,
       // "fechaResolucion": nuevoCaso.fechaResolucion,
     };
@@ -88,5 +90,45 @@ class RepositorioCasoImpl implements RepositorioCaso {
     // };
 
     await coleccionCasos.doc(idCasoDocument).update({atributoName: newData});
+  }
+
+  @override
+  Future<List<Caso>> todosLosTransitosPendientes() async {
+    try {
+      QuerySnapshot query = await coleccionCasos
+          .where("estado", isEqualTo: "pendiente")
+          .where("tipoDeCaso", isEqualTo: "transito")
+          .get();
+      if (query.docs.isNotEmpty) {
+        return query.docs
+            .map((doc) => Caso.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception("Caso no encontrado");
+      }
+    } catch (e) {
+      print("Error al buscar casos pendientes!");
+      throw Exception("Error al buscar caso");
+    }
+  }
+
+  @override
+  Future<List<Caso>> todosLosAdopcionPendientes() async {
+    try {
+      QuerySnapshot query = await coleccionCasos
+          .where("estado", isEqualTo: "pendiente")
+          .where("tipoDeCaso", isEqualTo: "adopcion")
+          .get();
+      if (query.docs.isNotEmpty) {
+        return query.docs
+            .map((doc) => Caso.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception("Caso no encontrado");
+      }
+    } catch (e) {
+      print("Error al buscar casos pendientes!");
+      throw Exception("Error al buscar caso");
+    }
   }
 }

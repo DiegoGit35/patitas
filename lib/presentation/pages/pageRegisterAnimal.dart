@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,6 +31,9 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
   TextEditingController foto = TextEditingController();
   TipoDeCaso tipoDeCasoSeleccionado = TipoDeCaso.adopcion;
   Distrito distritoSeleccionado = Distrito.chilecito;
+  String? fotoAnimal = fotoDefault;
+  String fotoDef = fotoDefault;
+  PlatformFile? pickerFile;
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +126,13 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
                 color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
                 spreadRadius: 1,
                 blurRadius: 5,
-                offset: Offset(0, 0))
+                offset: const Offset(0, 0))
           ], borderRadius: BorderRadius.circular(20), color: containerColor),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ////////////////////////////// ACA SE COLOCAN LOS WIDGETS //////////////////////////////
             children: [
+              _WidgetFotoAnimal(),
               Row(
                 children: [
                   Expanded(
@@ -207,8 +215,55 @@ class _PageRegistrarState extends State<Pageregisteranimal> {
       onChanged: (value) {
         setState(() {
           distritoSeleccionado = value!;
+          print(distritoSeleccionado);
         });
       },
+    );
+  }
+
+  Widget _WidgetFotoAnimal() {
+    Future _seleccionarFoto() async {
+      final imageDeDispositivo = await FilePicker.platform.pickFiles();
+      setState(() {
+        pickerFile = imageDeDispositivo!.files.first;
+      });
+    }
+
+    return Column(
+      children: [
+        Container(
+          width: 200,
+          height: 200,
+          decoration:
+              const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(100)),
+            child: pickerFile == null
+                ? Image.asset(fotoDefault)
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.file(
+                      File(pickerFile!.path!),
+                      fit: BoxFit.cover,
+                    )),
+          ),
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(6))),
+          onPressed: () {
+            _seleccionarFoto();
+          },
+          child: Text(
+            "Subir foto",
+            style: TextStyle(color: Colors.black),
+          ),
+        )
+      ],
     );
   }
 }

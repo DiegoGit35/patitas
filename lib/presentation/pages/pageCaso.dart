@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/domain/entities/caso.dart';
+import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/use_cases/administracion_patitas.dart';
 import 'package:patitas/presentation/pages/pageAdopcion.dart';
+import 'package:patitas/presentation/pages/pageTransitar.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/snakbar.dart';
@@ -17,30 +19,42 @@ class Pagecaso extends StatefulWidget {
 
 class _PagecasoState extends State<Pagecaso> {
   bool adoptando = false;
+  bool animalAdoptado = false;
 
   AdministracionPatitas adm = AdministracionPatitas();
 
   void _funcionBoton(context) async {
-    print(".................ADOPTANDO...............");
     setState(() {
       adoptando = true;
     });
 
-    String mensaje = await adm.adoptar(widget.unCaso);
+    String mensaje = widget.unCaso.tipoDeCaso == TipoDeCaso.transito
+        ? await adm.transitar(widget.unCaso)
+        : await adm.adoptar(widget.unCaso);
+
     //--------- DESMARCAR ESTO CUANDO YA SE PUEDA MODIFICAR EL ESTADO DE UN CASO
     //----------vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv----------
     switch (mensaje) {
       case "YaAdoptado":
-        SnackbarWidget.showSnackBar(context,
-            "QUE MAL!!!, EL ANIMAL YA FUE ADOPTADO POR OTRA PERSONA", true);
+        SnackbarWidget.showSnackBar(
+            context,
+            widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
+                ? "QUE MAL!!!, EL ANIMAL YA FUE ADOPTADO POR OTRA PERSONA"
+                : "QUE MAL!!!, EL ANIMAL YA FUE TRANSITADO POR OTRA PERSONA",
+            true);
         break;
       case "bien":
         SnackbarWidget.showSnackBar(
-            context, "FELICIDADES!!!! HAS ADOPTADO UN ANIMAL :)", false);
+            context,
+            widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
+                ? "FELICIDADES, ADOPTASTE UN ANIMAL"
+                : "FELICIDADES, TRANSITASTE UN ANIMAL",
+            false);
         break;
     }
 
     setState(() {
+      animalAdoptado = true;
       adoptando = false;
     });
   }
@@ -49,7 +63,7 @@ class _PagecasoState extends State<Pagecaso> {
   Widget build(BuildContext context) {
     String tiempoRegistrado() {
       DateTime dateTimeRegister = DateTime.parse(widget.unCaso.fechaRegistro!);
-      print("${widget.unCaso.fechaRegistro}");
+
       DateTime datetimeNow = DateTime.now();
       Duration diferencia = datetimeNow.difference(dateTimeRegister);
       if (diferencia.inDays > 0) {
@@ -88,8 +102,15 @@ class _PagecasoState extends State<Pagecaso> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageAdopcion()));
+            Navigator.push(
+                context,
+                // ignore: unrelated_type_equality_checks
+                MaterialPageRoute(
+                    // ignore: unrelated_type_equality_checks
+                    builder: (context) =>
+                        widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
+                            ? const PageAdopcion()
+                            : const Pagetransitar()));
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -104,18 +125,20 @@ class _PagecasoState extends State<Pagecaso> {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _fotoAnimal("foto"),
+                  _fotoAnimal(widget.unCaso.foto),
                   const SizedBox(height: 10),
                   _textDatos(
-                      "registrado por", "${widget.unCaso.usuarioAdoptante}"),
+                      "registrado por", widget.unCaso.usuarioRegistrante),
                   const Divider(),
                   _textDatos("hace", tiempoRegistrado()),
                   const Divider(),
                   const SizedBox(height: 10),
                   // boton("adoptar", () {})
-                  _botonAdoptar(adoptando, () {
-                    _funcionBoton(context);
-                  })
+                  !animalAdoptado
+                      ? _botonAdoptar(adoptando, () {
+                          _funcionBoton(context);
+                        }, widget.unCaso)
+                      : Container()
                 ],
               ),
             ),
@@ -141,7 +164,8 @@ class _PagecasoState extends State<Pagecaso> {
   }
 }
 
-Widget _botonAdoptar(bool adoptando, Function funcion) {
+Widget _botonAdoptar(bool adoptando, Function funcion, Caso unCaso) {
+  print(unCaso.tipoDeCaso);
   return SizedBox(
     width: 300,
     child: ElevatedButton(
@@ -154,14 +178,26 @@ Widget _botonAdoptar(bool adoptando, Function funcion) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            adoptando ? "ADOPTANDO" : "ADOPTAR",
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
+          if (unCaso.tipoDeCaso == TipoDeCaso.adopcion) ...[
+            Text(
+              adoptando ? "ADOPTANDO" : "ADOPTAR",
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
             ),
-          ),
+          ],
+          if (unCaso.tipoDeCaso == TipoDeCaso.transito) ...[
+            Text(
+              adoptando ? "TRANSITAR..." : "TRANSITAR",
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ],
           if (adoptando) ...[
             const SizedBox(width: 10),
             const SizedBox(
@@ -218,16 +254,15 @@ Widget _fotoAnimal(String foto) {
   return Container(
     width: 300,
     height: 300,
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.black, width: 3),
+    decoration: const BoxDecoration(
+      // border:
+      //     Border.all(color: const Color.fromARGB(255, 255, 255, 255), width: 3),
       shape: BoxShape.circle,
-      color: const Color.fromARGB(255, 117, 33, 27),
+      color: Color.fromARGB(255, 0, 0, 0),
     ),
-    child: Center(
-      child: Text(
-        foto,
-        style: const TextStyle(color: Colors.white),
-      ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(900),
+      child: Image.asset(foto),
     ),
   );
 }

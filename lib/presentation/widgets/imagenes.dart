@@ -7,3 +7,5 @@ List<String> imgAnimles = [
   "assets/imagenes/3.jpg",
   "assets/imagenes/4.jpg",
 ];
+
+String fotoDefault = "assets/imagenes/default.jpg";

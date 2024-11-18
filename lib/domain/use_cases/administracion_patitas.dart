@@ -84,7 +84,17 @@ class AdministracionPatitas {
     return "YaAdoptado";
   }
 
-  void transitar() {}
+  Future<String> transitar(Caso unCaso) async {
+    print("entrando a funcion adoptar");
+    List<Caso> listaCasos = await repoCaso.todosLosTransitosPendientes();
+    for (Caso casoBD in listaCasos) {
+      if (casoBD.idCaso == unCaso.idCaso) {
+        repoCaso.actualizarDatosCasos("estado", "transitado", unCaso.idCaso!);
+        return "bien";
+      }
+    }
+    return "YaAdoptado";
+  }
 
   Future<String> registrarNuevoCaso({
     required String direccion,
@@ -115,10 +125,14 @@ class AdministracionPatitas {
   registrarResolucionDeCaso(Caso caso, Usuario usuarioAdoptante) {}
 
   Future<List<Caso>> getCasosDeAdopcionNoResueltos() {
-    return repoCaso.todosLosCasosPendientes();
+    return repoCaso.todosLosAdopcionPendientes();
   }
 
   getCasosDeAdopcionResueltos() {}
 
   getCasosDeTransitoResueltos() {}
+
+  Future<List<Caso>> getCasosDeTransitoNoResultos() {
+    return repoCaso.todosLosTransitosPendientes();
+  }
 }

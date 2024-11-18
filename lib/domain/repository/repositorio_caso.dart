@@ -7,6 +7,8 @@ abstract class RepositorioCaso {
   Future<List<Caso>> todosLosCasosPendientes();
   Future<Caso> getCasoById(int casoId);
   Future<String> obtenerIDDocumento(String idCaso);
+  Future<List<Caso>> todosLosTransitosPendientes();
+  Future<List<Caso>> todosLosAdopcionPendientes();
   void actualizarDatosCasos(
       String atributoName, dynamic newData, String idCasoDocument);
 }

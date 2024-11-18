@@ -32,9 +32,9 @@ class Caso {
         fechaRegistro: map["fechaRegistro"],
         fechaBaja: map["fechaBaja"],
         fechaResolucion: map["fechaResolucion"],
-        tipoDeCaso: map["tipo"] == "adopcion"
+        tipoDeCaso: map["tipoDeCaso"] == "adopcion"
             ? TipoDeCaso.adopcion
-            : map["tipo"] == "busqueda"
+            : map["tipoDeCaso"] == "busqueda"
                 ? TipoDeCaso.busqueda
                 : TipoDeCaso.transito,
         usuarioRegistrante: map["usuarioRegistrante"],
