@@ -13,6 +13,11 @@ import '../entities/caso.dart';
 class AdministracionPatitas {
   RepositorioUsuario repoUsuario = RepositorioUsuarioImpl();
   RepositorioCaso repoCaso = RepositorioCasoImpl();
+
+  Future<List<Usuario>> getTodosLosUsuariosRegistrados() async {
+    return repoUsuario.todosLosUsuarios();
+  }
+
   Future<String> registrarse(String nombre, String apellido, String email,
       String telefono, String password, DateTime fechaNa, String genero) async {
     int yearMax = 2023 - 18;
@@ -52,19 +57,24 @@ class AdministracionPatitas {
     if (numeroEmail.isEmpty || password.isEmpty) {
       return "casillas";
     }
-    Usuario usuarioBuscado = await repoUsuario.getUsuarioByEmail(numeroEmail);
-    if (usuarioBuscado.email!.isNotEmpty) {
-      if (password == usuarioBuscado.contrasenia) {
-        // final sessionManager = SessionManager();
-        await session.saveUserId("${usuarioBuscado.email}");
-        // print("from CU: ${await session.getUserId()}");
-        return "bien";
-      } else {
-        return "passNull";
+    List<Usuario> usuariosBuscado = await repoUsuario.todosLosUsuarios();
+    print(
+        "-------------------------${usuariosBuscado[0].apellido}-------------------------");
+    for (Usuario usuario in usuariosBuscado) {
+      if (usuario.email == numeroEmail) {
+        if (password == usuario.contrasenia) {
+          // final sessionManager = SessionManager();
+          await session.saveUserId("${usuario.email}");
+          // print("from CU: ${await session.getUserId()}");
+          return "bien";
+        } else {
+          return "passNull";
+        }
       }
-    } else {
-      return "usuarioNull";
     }
+
+    print("......................USUARIO ENCONTRADO.....................");
+    return "usuarioNull";
   }
 
   Future<List<Usuario>> getTodosLosUsuariosActivos() async {

@@ -8,14 +8,19 @@ import 'package:patitas/presentation/widgets/snakbar.dart';
 
 import '../../data/adaptador.dart';
 
-class Pageiniciosesion extends StatelessWidget {
+class Pageiniciosesion extends StatefulWidget {
   const Pageiniciosesion({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController numeroCorreoController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+  State<Pageiniciosesion> createState() => _PageiniciosesionState();
+}
 
+class _PageiniciosesionState extends State<Pageiniciosesion> {
+  bool verificando = false;
+  TextEditingController numeroCorreoController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
     void resetAllControllers() {
       numeroCorreoController.clear();
       passwordController.clear();
@@ -24,6 +29,9 @@ class Pageiniciosesion extends StatelessWidget {
     void verificarDatos() async {
       String numeroCorreo = numeroCorreoController.text;
       String password = passwordController.text;
+      setState(() {
+        verificando = true;
+      });
 
       print("....................VERIFICANDO....................");
       String mensaje = await adminApp.iniciarSesion(numeroCorreo, password);
@@ -32,12 +40,21 @@ class Pageiniciosesion extends StatelessWidget {
         case "casillas":
           SnackbarWidget.showSnackBar(context,
               "ERROR: Casillas vacias, intente rellenarlas todas", true);
+          setState(() {
+            verificando = false;
+          });
         case "usuarioNull":
           SnackbarWidget.showSnackBar(
               context, "ERROR: Este usuario no existe(no registrado)", true);
+          setState(() {
+            verificando = false;
+          });
         case "passNull":
           SnackbarWidget.showSnackBar(
               context, "ERROR: Contraseña incorrecta o mal escrita", true);
+          setState(() {
+            verificando = false;
+          });
         case "bien":
           cambiarPantalla("menu");
       }
@@ -78,9 +95,11 @@ class Pageiniciosesion extends StatelessWidget {
             const SizedBox(height: 20),
             mytexfield("contraseña", passwordController, true),
             const SizedBox(height: 30),
-            boton("iniciar sesion", () {
-              verificarDatos();
-            })
+            BotonIniciar(
+              funcion: () => verificarDatos(),
+              tittle: "iniciar session",
+              verificando: verificando,
+            )
           ],
         ),
       );
@@ -124,5 +143,44 @@ class Pageiniciosesion extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class BotonIniciar extends StatelessWidget {
+  VoidCallback funcion;
+  String tittle;
+  bool verificando;
+  BotonIniciar(
+      {super.key,
+      required this.funcion,
+      required this.tittle,
+      required this.verificando});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: 300,
+        height: 40,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5))),
+            onPressed: verificando ? null : funcion,
+            child: verificando
+                ? const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                        Text(
+                          "VERIFICANDO.....",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        SizedBox(
+                            width: 10,
+                            height: 10,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ))
+                      ])
+                : Text(tittle, style: const TextStyle(color: Colors.black))));
   }
 }

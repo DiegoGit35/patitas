@@ -93,7 +93,7 @@ Future<Container> containerTwo(context) async {
                         BotonMenu(
                           tittle: "administrar usuario",
                           icon: Icons.person,
-                          funcion: () {},
+                          funcion: () => cambiarPantalla("adminsUser"),
                         ),
                       ],
                       const SizedBox(height: 15),

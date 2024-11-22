@@ -59,11 +59,12 @@ class PageAdopcion extends StatelessWidget {
                   List<Caso> casos = snapshot.data!;
                   return Container(
                     width: MediaQuery.of(context).size.width,
+
                     child: GridView.builder(
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4),
+                              childAspectRatio: 0.8, crossAxisCount: 4),
                       itemCount: casos.length,
                       itemBuilder: (BuildContext context, int index) {
                         Caso unAnimal = casos[index];
@@ -126,10 +127,11 @@ Container animalItem(Caso unAnimal, context) {
             ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Colors.white,
       ),
-      child: Container(
-        padding: const EdgeInsets.all(10),
+      child: Padding(
+        padding: EdgeInsets.all(10),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               animalFoto(unAnimal.foto),
               SizedBox(
@@ -138,9 +140,10 @@ Container animalItem(Caso unAnimal, context) {
                     texto("ubicacion:", 15, Colors.black, true),
                     texto(unAnimal.direccion, 15,
                         const Color.fromARGB(255, 75, 75, 75), false),
-                    // texto("contacto:", 15, Colors.black, true),
-                    // texto(unAnimal.contacto, 15,
-                    //     const Color.fromARGB(255, 75, 75, 75), false),
+                    const SizedBox(height: 10),
+                    texto("contacto:", 15, Colors.black, true),
+                    texto(unAnimal.contacto, 15,
+                        const Color.fromARGB(255, 75, 75, 75), false),
                   ],
                 ),
               ),
@@ -154,9 +157,10 @@ Container animalItem(Caso unAnimal, context) {
 
 Container animalFoto(String foto) {
   return Container(
-    decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 0, 0, 0),
-        borderRadius: BorderRadius.circular(20)),
+    decoration: const BoxDecoration(
+      shape: BoxShape.circle,
+      color: Color.fromARGB(255, 0, 0, 0),
+    ),
     height: 200,
     width: 200,
     clipBehavior: Clip.antiAlias,
