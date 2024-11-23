@@ -131,4 +131,24 @@ class RepositorioCasoImpl implements RepositorioCaso {
       throw Exception("Error al buscar caso");
     }
   }
+
+  @override
+  Future<List<Caso>> todosLosCasosSeBusca() async {
+    try {
+      QuerySnapshot query = await coleccionCasos
+          .where("estado", isEqualTo: "pendiente")
+          .where("tipoDeCaso", isEqualTo: "busqueda")
+          .get();
+      if (query.docs.isNotEmpty) {
+        return query.docs
+            .map((doc) => Caso.fromMap(doc.data() as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception("Caso no encontrado");
+      }
+    } catch (e) {
+      print("Error al buscar casos pendientes!");
+      throw Exception("Error al buscar caso");
+    }
+  }
 }

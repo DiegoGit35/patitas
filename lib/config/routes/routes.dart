@@ -9,6 +9,7 @@ import 'package:patitas/presentation/pages/pageMenu.dart';
 import 'package:patitas/presentation/pages/pageRegisterAnimal.dart';
 import 'package:patitas/presentation/pages/pageTransitar.dart';
 import 'package:patitas/presentation/pages/page_admiduser.dart';
+import 'package:patitas/presentation/pages/page_busqueda.dart';
 
 import '../../presentation/pages/pageRegistrar.dart';
 
@@ -50,6 +51,10 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/adminsUser',
       builder: (context, state) => const PageAdmiduser(),
+    ),
+    GoRoute(
+      path: '/busqueda',
+      builder: (context, state) => const PageBusqueda(),
     ),
     // GoRoute(
     //   path: '/caso',

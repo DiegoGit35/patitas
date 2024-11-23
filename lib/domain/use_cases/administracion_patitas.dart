@@ -145,4 +145,8 @@ class AdministracionPatitas {
   Future<List<Caso>> getCasosDeTransitoNoResultos() {
     return repoCaso.todosLosTransitosPendientes();
   }
+
+  Future<List<Caso>> getTodosLosAnimalesPerdidos() {
+    return repoCaso.todosLosCasosSeBusca();
+  }
 }

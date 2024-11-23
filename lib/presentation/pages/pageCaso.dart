@@ -5,6 +5,7 @@ import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/use_cases/administracion_patitas.dart';
 import 'package:patitas/presentation/pages/pageAdopcion.dart';
 import 'package:patitas/presentation/pages/pageTransitar.dart';
+import 'package:patitas/presentation/pages/page_busqueda.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/snakbar.dart';
@@ -18,14 +19,14 @@ class Pagecaso extends StatefulWidget {
 }
 
 class _PagecasoState extends State<Pagecaso> {
-  bool adoptando = false;
+  bool procesando = false;
   bool animalAdoptado = false;
 
   AdministracionPatitas adm = AdministracionPatitas();
 
   void _funcionBoton(context) async {
     setState(() {
-      adoptando = true;
+      procesando = true;
     });
 
     String mensaje = widget.unCaso.tipoDeCaso == TipoDeCaso.transito
@@ -55,7 +56,7 @@ class _PagecasoState extends State<Pagecaso> {
 
     setState(() {
       animalAdoptado = true;
-      adoptando = false;
+      procesando = false;
     });
   }
 
@@ -110,7 +111,9 @@ class _PagecasoState extends State<Pagecaso> {
                     builder: (context) =>
                         widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
                             ? const PageAdopcion()
-                            : const Pagetransitar()));
+                            : widget.unCaso.tipoDeCaso == TipoDeCaso.transito
+                                ? const Pagetransitar()
+                                : const PageBusqueda()));
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -133,11 +136,22 @@ class _PagecasoState extends State<Pagecaso> {
                   _textDatos("hace", tiempoRegistrado()),
                   const Divider(),
                   const SizedBox(height: 10),
-                  // boton("adoptar", () {})
                   !animalAdoptado
-                      ? _botonAdoptar(adoptando, () {
-                          _funcionBoton(context);
-                        }, widget.unCaso)
+                      ? _botonCaso(
+                          procesando,
+                          procesando ? () {} : () => _funcionBoton(context),
+                          widget.unCaso,
+                          widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
+                              ? "ADOPTAR"
+                              : "TRANSITAR",
+                          widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
+                              ? "ADOPTANDO..."
+                              : "TRANSITANDO...",
+                          widget.unCaso.tipoDeCaso == TipoDeCaso.adopcion
+                              ? true
+                              : widget.unCaso.tipoDeCaso == TipoDeCaso.transito
+                                  ? true
+                                  : false)
                       : Container()
                 ],
               ),
@@ -164,55 +178,48 @@ class _PagecasoState extends State<Pagecaso> {
   }
 }
 
-Widget _botonAdoptar(bool adoptando, Function funcion, Caso unCaso) {
+Widget _botonCaso(bool procesando, Function funcion, Caso unCaso,
+    String tituloNormal, String tituloProcesando, bool showButton) {
   print(unCaso.tipoDeCaso);
-  return SizedBox(
-    width: 300,
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black),
-              borderRadius: BorderRadius.all(Radius.circular(5)))),
-      onPressed: () => funcion(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (unCaso.tipoDeCaso == TipoDeCaso.adopcion) ...[
+  if (showButton) {
+    return SizedBox(
+      width: 300,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.all(Radius.circular(5)))),
+        onPressed: () => funcion(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Text(
-              adoptando ? "ADOPTANDO" : "ADOPTAR",
+              procesando ? tituloProcesando : tituloNormal,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
             ),
-          ],
-          if (unCaso.tipoDeCaso == TipoDeCaso.transito) ...[
-            Text(
-              adoptando ? "TRANSITAR..." : "TRANSITAR",
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+            if (procesando) ...[
+              const SizedBox(width: 10),
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.black,
+                ),
               ),
-            ),
+            ]
           ],
-          if (adoptando) ...[
-            const SizedBox(width: 10),
-            const SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.black,
-              ),
-            ),
-          ]
-        ],
+        ),
       ),
-    ),
-  );
+    );
+  } else {
+    return Container();
+  }
 }
 
 Widget _cajaContainer(Widget misWidget) {

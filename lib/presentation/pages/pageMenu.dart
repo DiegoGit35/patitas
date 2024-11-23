@@ -67,7 +67,7 @@ Future<Container> containerTwo(context) async {
                       BotonMenu(
                           tittle: "se busca",
                           icon: Icons.search,
-                          funcion: () {}),
+                          funcion: () => cambiarPantalla("busqueda")),
                       const SizedBox(height: 10),
                       BotonMenu(
                         tittle: "en adopcion",
