@@ -17,30 +17,32 @@ class Usuario {
   TipoDeUsuario tipo;
   String? dni;
   String? sexo;
+  DateTime? fechaDeBaja;
 
-  Usuario({
-    this.idUsuario,
-    this.nombre,
-    this.apellido,
-    this.foto,
-    this.fechaNacimiento,
-    this.email,
-    this.contrasenia,
-    this.direccion,
-    this.distrito,
-    this.telefono,
-    this.tipo = TipoDeUsuario.normal,
-    this.dni,
-    this.sexo,
-  });
+  Usuario(
+      {this.idUsuario,
+      this.nombre,
+      this.apellido,
+      this.foto,
+      this.fechaNacimiento,
+      this.email,
+      this.contrasenia,
+      this.direccion,
+      this.distrito,
+      this.telefono,
+      this.tipo = TipoDeUsuario.normal,
+      this.dni,
+      this.sexo,
+      this.fechaDeBaja});
 
   factory Usuario.fromMap(Map<String, dynamic> map) {
     return Usuario(
-    // idUsuario: documentId, 
+      idUsuario: map["idUsuario"],
       nombre: map["nombre"] ?? '',
       apellido: map["apellido"] ?? '',
       foto: map["foto"] ?? '',
       fechaNacimiento: (map["fechaNacimiento"] as Timestamp).toDate(),
+      fechaDeBaja: (map["fechaDeBaja"] as Timestamp?)?.toDate(),
       email: map["email"] ?? '',
       contrasenia: map["contrasenia"] ?? '',
       direccion: map["direccion"] ?? '',

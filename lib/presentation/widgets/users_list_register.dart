@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:patitas/config/routes/routes.dart';
 import 'package:patitas/data/adaptador.dart';
 import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/presentation/pages/pageAdopcion.dart';
@@ -55,12 +57,7 @@ class UserCard extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20))),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PageAnuser(usuario: usuario)));
-        },
+        onPressed: () => context.go("/usuario", extra: usuario),
         child: Row(
           children: [
             ClipRRect(

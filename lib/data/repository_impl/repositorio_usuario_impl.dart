@@ -10,9 +10,11 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
   @override
   Future<void> agregarUsuario(Usuario nuevoUsuario) async {
     Map<String, dynamic> usuario = {
+      "idUsuario": nuevoUsuario.idUsuario,
       "nombre": nuevoUsuario.nombre,
       "apellido": nuevoUsuario.apellido,
       "fechaNacimiento": nuevoUsuario.fechaNacimiento,
+      "fechaDeBaja": nuevoUsuario.fechaDeBaja,
       "email": nuevoUsuario.email,
       "contrasenia": nuevoUsuario.contrasenia,
       "foto": "assets/default-avatar.png",
@@ -27,12 +29,23 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
       // "dni": nuevoUsuario.dni,
     };
 
-    await coleccionUsuarios.add(usuario);
+    // await coleccionUsuarios.add(usuario);
+
+    DocumentReference documentReference = await coleccionUsuarios.add(usuario);
+    await documentReference.update({"idUsuario": documentReference.id});
   }
 
   @override
-  void bajarUsuario(int usuarioId) {
-    // TODO: implement bajarUsuario
+  void bajarUsuario(String usuarioId) async {
+    // print("hola desde admins");
+    DateTime fechaDeBaja = DateTime.now();
+    await coleccionUsuarios.doc(usuarioId).update({"fechaDeBaja": fechaDeBaja});
+    // print("usuario dado de baja a las ${fechaDeBaja.toString()}");
+  }
+
+  @override
+  void activarUsuario(String usuarioId) async {
+    await coleccionUsuarios.doc(usuarioId).update({"fechaDeBaja": null});
   }
 
   @override
@@ -50,9 +63,12 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
   }
 
   @override
-  Future<List<Usuario>> todosLosUsuariosActivos() {
-    // TODO: implement todosLosUsuariosActivos
-    throw UnimplementedError();
+  Future<List<Usuario>> todosLosUsuariosActivos() async {
+    QuerySnapshot snapshot =
+        await coleccionUsuarios.where("fechaDeBaja", isEqualTo: null).get();
+    return snapshot.docs
+        .map((doc) => Usuario.fromMap(doc.data() as Map<String, dynamic>))
+        .toList();
   }
 
   @override

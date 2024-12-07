@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/domain/enums/estado_de_caso.dart';
+import 'package:patitas/domain/enums/mensages_login.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
 import 'package:patitas/presentation/widgets/imagenes.dart';
@@ -34,29 +36,39 @@ class _PageiniciosesionState extends State<Pageiniciosesion> {
       });
 
       print("....................VERIFICANDO....................");
-      String mensaje = await adminApp.iniciarSesion(numeroCorreo, password);
+
+      EstadoLogin mensaje =
+          await adminApp.iniciarSesion(numeroCorreo, password);
+
       print("....................DATOS VERIFICADOS....................");
+
       switch (mensaje) {
-        case "casillas":
+        case EstadoLogin.casillasVacias:
           SnackbarWidget.showSnackBar(context,
               "ERROR: Casillas vacias, intente rellenarlas todas", true);
           setState(() {
             verificando = false;
           });
-        case "usuarioNull":
+        case EstadoLogin.cuentaNoExiste:
           SnackbarWidget.showSnackBar(
               context, "ERROR: Este usuario no existe(no registrado)", true);
           setState(() {
             verificando = false;
           });
-        case "passNull":
+        case EstadoLogin.contrasenaIncorrecta:
           SnackbarWidget.showSnackBar(
               context, "ERROR: Contraseña incorrecta o mal escrita", true);
           setState(() {
             verificando = false;
           });
-        case "bien":
+        case EstadoLogin.cuentaEncontrada:
           cambiarPantalla("menu");
+        case EstadoLogin.cuentaDesactivada:
+          SnackbarWidget.showSnackBar(
+              context, "ERROR: Esta cuenta está desactivada", true);
+          setState(() {
+            verificando = false;
+          });
       }
     }
 

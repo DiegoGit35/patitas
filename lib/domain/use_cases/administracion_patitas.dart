@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/domain/enums/estado_de_caso.dart';
+import 'package:patitas/domain/enums/mensages_login.dart';
+import 'package:patitas/domain/enums/mensages_register.dart';
 import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/repository/repositorio_caso.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
@@ -18,8 +20,14 @@ class AdministracionPatitas {
     return repoUsuario.todosLosUsuarios();
   }
 
-  Future<String> registrarse(String nombre, String apellido, String email,
-      String telefono, String password, DateTime fechaNa, String genero) async {
+  Future<EstadoRegistro> registrarse(
+      String nombre,
+      String apellido,
+      String email,
+      String telefono,
+      String password,
+      DateTime fechaNa,
+      String genero) async {
     int yearMax = 2023 - 18;
 
     if (nombre.isEmpty ||
@@ -28,16 +36,16 @@ class AdministracionPatitas {
         telefono.isEmpty ||
         password.isEmpty ||
         genero.isEmpty) {
-      return "casillas";
+      return EstadoRegistro.casillasVacias;
     }
 
     if (fechaNa.year >= yearMax) {
-      return "year";
+      return EstadoRegistro.aniosMenor;
     }
 
     if (await repoUsuario.usuarioExiste(email: email) ||
         await repoUsuario.usuarioExiste(telefono: telefono)) {
-      return "registrado";
+      return EstadoRegistro.cuentaYaRegistrada;
     }
 
     repoUsuario.agregarUsuario(Usuario(
@@ -50,31 +58,35 @@ class AdministracionPatitas {
       sexo: genero,
     ));
 
-    return "bien";
+    return EstadoRegistro.cuentaRegistrada;
   }
 
-  Future<String> iniciarSesion(String numeroEmail, String password) async {
+  Future<EstadoLogin> iniciarSesion(String numeroEmail, String password) async {
     if (numeroEmail.isEmpty || password.isEmpty) {
-      return "casillas";
+      return EstadoLogin.casillasVacias;
     }
     List<Usuario> usuariosBuscado = await repoUsuario.todosLosUsuarios();
-    print(
-        "-------------------------${usuariosBuscado[0].apellido}-------------------------");
+    // print(
+    //     "-------------------------${usuariosBuscado[0].apellido}-------------------------");
     for (Usuario usuario in usuariosBuscado) {
       if (usuario.email == numeroEmail) {
         if (password == usuario.contrasenia) {
           // final sessionManager = SessionManager();
-          await session.saveUserId("${usuario.email}");
-          // print("from CU: ${await session.getUserId()}");
-          return "bien";
+          if (usuario.fechaDeBaja != null) {
+            return EstadoLogin.cuentaDesactivada;
+          } else {
+            await session.saveUserId("${usuario.email}");
+            // print("from CU: ${await session.getUserId()}");
+            return EstadoLogin.cuentaEncontrada;
+          }
         } else {
-          return "passNull";
+          return EstadoLogin.contrasenaIncorrecta;
         }
       }
     }
 
     print("......................USUARIO ENCONTRADO.....................");
-    return "usuarioNull";
+    return EstadoLogin.cuentaNoExiste;
   }
 
   Future<List<Usuario>> getTodosLosUsuariosActivos() async {
@@ -148,5 +160,15 @@ class AdministracionPatitas {
 
   Future<List<Caso>> getTodosLosAnimalesPerdidos() {
     return repoCaso.todosLosCasosSeBusca();
+  }
+
+  void desactivarUnUsuario(Usuario unUsuario) {
+    print(unUsuario.idUsuario);
+    repoUsuario.bajarUsuario(unUsuario.idUsuario!);
+  }
+
+  void activarUnUsuario(Usuario unUsuario) {
+    print(unUsuario.idUsuario);
+    repoUsuario.activarUsuario(unUsuario.idUsuario!);
   }
 }

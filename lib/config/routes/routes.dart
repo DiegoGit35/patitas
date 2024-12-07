@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/presentation/pages/fechatest.dart';
 import 'package:patitas/presentation/pages/pageAdopcion.dart';
 import 'package:patitas/presentation/pages/pageCaso.dart';
@@ -9,6 +10,7 @@ import 'package:patitas/presentation/pages/pageMenu.dart';
 import 'package:patitas/presentation/pages/pageRegisterAnimal.dart';
 import 'package:patitas/presentation/pages/pageTransitar.dart';
 import 'package:patitas/presentation/pages/page_admiduser.dart';
+import 'package:patitas/presentation/pages/page_anUser.dart';
 import 'package:patitas/presentation/pages/page_busqueda.dart';
 
 import '../../presentation/pages/pageRegistrar.dart';
@@ -49,8 +51,16 @@ GoRouter router = GoRouter(
       builder: (context, state) => const Pageregisteranimal(),
     ),
     GoRoute(
+      // final String message = state.extra as String;
       path: '/adminsUser',
       builder: (context, state) => const PageAdmiduser(),
+    ),
+    GoRoute(
+      path: '/usuario',
+      builder: (context, state) {
+        final Usuario usuario = state.extra as Usuario;
+        return PageAnuser(usuario: usuario);
+      },
     ),
     GoRoute(
       path: '/busqueda',
@@ -68,5 +78,6 @@ GoRouter router = GoRouter(
 );
 
 void cambiarPantalla(String route) {
+  print("cambiar pantalla");
   router.go("/$route");
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:patitas/config/routes/routes.dart';
+import 'package:patitas/domain/enums/mensages_register.dart';
 import 'package:patitas/domain/use_cases/administracion_patitas.dart';
 import 'package:patitas/presentation/widgets/botones.dart';
 import 'package:patitas/presentation/widgets/colores.dart';
@@ -51,7 +52,7 @@ class _PageRegistrarState extends State<PageRegistrar> {
     }
 
     void guardarDatos() async {
-      String mensaje = await adm.registrarse(
+      EstadoRegistro mensaje = await adm.registrarse(
           nombreController.text,
           apellidoController.text,
           emailController.text,
@@ -65,22 +66,22 @@ class _PageRegistrarState extends State<PageRegistrar> {
                   : generoOtroController.text);
 
       switch (mensaje) {
-        case "casillas":
+        case EstadoRegistro.casillasVacias:
           SnackbarWidget.showSnackBar(
               context, "ERROR: Hay casillas sin rellenar", true);
           break;
 
-        case "year":
+        case EstadoRegistro.aniosMenor:
           SnackbarWidget.showSnackBar(
               context, "ERROR: No tienes edad para usar esta app", true);
           break;
 
-        case "registrado":
+        case EstadoRegistro.cuentaYaRegistrada:
           SnackbarWidget.showSnackBar(context,
               "ERROR: Número de teléfono o Email ya están registrados", true);
           break;
 
-        case "bien":
+        case EstadoRegistro.cuentaRegistrada:
           SnackbarWidget.showSnackBar(
               context,
               "Usuario ${nombreController.text} ${apellidoController.text} registrado con éxito",

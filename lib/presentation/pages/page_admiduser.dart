@@ -22,7 +22,7 @@ class PageAdmiduser extends StatelessWidget {
           child: Column(
             children: [
               texto("USUARIOS REGISTRADOS", 20, Colors.black, true),
-              Expanded(child: const UsersListRegister())
+              const Expanded(child: UsersListRegister())
             ],
           ),
         ),
