@@ -163,12 +163,10 @@ class AdministracionPatitas {
   }
 
   void desactivarUnUsuario(Usuario unUsuario) {
-    print(unUsuario.idUsuario);
     repoUsuario.bajarUsuario(unUsuario.idUsuario!);
   }
 
   void activarUnUsuario(Usuario unUsuario) {
-    print(unUsuario.idUsuario);
     repoUsuario.activarUsuario(unUsuario.idUsuario!);
   }
 }
