@@ -1,6 +1,5 @@
 import 'dart:core';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 
 class Usuario {
@@ -19,21 +18,22 @@ class Usuario {
   String? sexo;
   DateTime? fechaDeBaja;
 
-  Usuario(
-      {this.idUsuario,
-      this.nombre,
-      this.apellido,
-      this.foto,
-      this.fechaNacimiento,
-      this.email,
-      this.contrasenia,
-      this.direccion,
-      this.distrito,
-      this.telefono,
-      this.tipo = TipoDeUsuario.normal,
-      this.dni,
-      this.sexo,
-      this.fechaDeBaja});
+  Usuario({
+    this.idUsuario,
+    this.nombre,
+    this.apellido,
+    this.foto,
+    this.fechaNacimiento,
+    this.email,
+    this.contrasenia,
+    this.direccion,
+    this.distrito,
+    this.telefono,
+    this.tipo = TipoDeUsuario.normal,
+    this.dni,
+    this.sexo,
+    this.fechaDeBaja,
+  });
 
   factory Usuario.fromMap(Map<String, dynamic> map) {
     return Usuario(
@@ -41,8 +41,12 @@ class Usuario {
       nombre: map["nombre"] ?? '',
       apellido: map["apellido"] ?? '',
       foto: map["foto"] ?? '',
-      fechaNacimiento: (map["fechaNacimiento"] as Timestamp).toDate(),
-      fechaDeBaja: (map["fechaDeBaja"] as Timestamp?)?.toDate(),
+      fechaNacimiento: map["fechaNacimiento"] != null
+          ? DateTime.parse(map["fechaNacimiento"].toString())
+          : null,
+      fechaDeBaja: map["fechaDeBaja"] != null
+          ? DateTime.parse(map["fechaDeBaja"].toString())
+          : null,
       email: map["email"] ?? '',
       contrasenia: map["contrasenia"] ?? '',
       direccion: map["direccion"] ?? '',

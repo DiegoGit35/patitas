@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/domain/enums/tipo_de_usuario.dart';
 import 'package:patitas/domain/repository/repositorio_usuario.dart';
 
+/*
 class RepositorioUsuarioImpl implements RepositorioUsuario {
-  CollectionReference coleccionUsuarios =
-      FirebaseFirestore.instance.collection("Usuario");
+  CollectionReference coleccionUsuarios = FirebaseFirestore.instance.collection(
+    "Usuario",
+  );
 
   @override
   Future<void> agregarUsuario(Usuario nuevoUsuario) async {
@@ -21,7 +23,7 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
       "sexo": nuevoUsuario.sexo,
       "tipo": nuevoUsuario.tipo == TipoDeUsuario.administrador
           ? "administrador"
-          : "normal"
+          : "normal",
       // "direccion": nuevoUsuario.direccion,
       // "distrito": nuevoUsuario.distrito,
       // "telefono": nuevoUsuario.telefono,
@@ -64,8 +66,9 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
 
   @override
   Future<List<Usuario>> todosLosUsuariosActivos() async {
-    QuerySnapshot snapshot =
-        await coleccionUsuarios.where("fechaDeBaja", isEqualTo: null).get();
+    QuerySnapshot snapshot = await coleccionUsuarios
+        .where("fechaDeBaja", isEqualTo: null)
+        .get();
     return snapshot.docs
         .map((doc) => Usuario.fromMap(doc.data() as Map<String, dynamic>))
         .toList();
@@ -112,5 +115,49 @@ class RepositorioUsuarioImpl implements RepositorioUsuario {
       print("Error al buscar usuario por email: $e");
       throw Exception("Error al buscar usuario");
     }
+  }
+}
+*/
+
+// TODO: Reinstalar Firebase para usar RepositorioUsuarioImpl
+class RepositorioUsuarioImpl implements RepositorioUsuario {
+  @override
+  Future<void> agregarUsuario(Usuario nuevoUsuario) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  void activarUsuario(String usuarioId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  void bajarUsuario(String usuarioId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Usuario> getUsuarioById(String usuarioId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Usuario> getUsuarioByEmail(String numeroEmail) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Usuario>> todosLosUsuarios() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Usuario>> todosLosUsuariosActivos() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> usuarioExiste({String? email, String? telefono}) {
+    throw UnimplementedError();
   }
 }

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/data/repository_impl/repositorio_usuario_impl.dart';
 import 'package:patitas/domain/entities/usuario.dart';
 import 'package:patitas/domain/enums/estado_de_caso.dart';
@@ -21,13 +21,14 @@ class AdministracionPatitas {
   }
 
   Future<EstadoRegistro> registrarse(
-      String nombre,
-      String apellido,
-      String email,
-      String telefono,
-      String password,
-      DateTime fechaNa,
-      String genero) async {
+    String nombre,
+    String apellido,
+    String email,
+    String telefono,
+    String password,
+    DateTime fechaNa,
+    String genero,
+  ) async {
     int yearMax = 2023 - 18;
 
     if (nombre.isEmpty ||
@@ -48,15 +49,17 @@ class AdministracionPatitas {
       return EstadoRegistro.cuentaYaRegistrada;
     }
 
-    repoUsuario.agregarUsuario(Usuario(
-      nombre: nombre,
-      apellido: apellido,
-      fechaNacimiento: fechaNa,
-      email: email,
-      telefono: telefono,
-      contrasenia: password,
-      sexo: genero,
-    ));
+    repoUsuario.agregarUsuario(
+      Usuario(
+        nombre: nombre,
+        apellido: apellido,
+        fechaNacimiento: fechaNa,
+        email: email,
+        telefono: telefono,
+        contrasenia: password,
+        sexo: genero,
+      ),
+    );
 
     return EstadoRegistro.cuentaRegistrada;
   }

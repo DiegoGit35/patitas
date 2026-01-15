@@ -1,12 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:patitas/domain/entities/caso.dart';
 import 'package:patitas/domain/enums/distrito.dart';
 import 'package:patitas/domain/enums/tipo_de_caso.dart';
 import 'package:patitas/domain/repository/repositorio_caso.dart';
 
+/*
 class RepositorioCasoImpl implements RepositorioCaso {
-  CollectionReference coleccionCasos =
-      FirebaseFirestore.instance.collection("Casos");
+  CollectionReference coleccionCasos = FirebaseFirestore.instance.collection(
+    "Casos",
+  );
 
   @override
   void agregarCaso(Caso nuevoCaso) async {
@@ -19,11 +21,11 @@ class RepositorioCasoImpl implements RepositorioCaso {
       "tipoDeCaso": nuevoCaso.tipoDeCaso == TipoDeCaso.adopcion
           ? "adopcion"
           : nuevoCaso.tipoDeCaso == TipoDeCaso.transito
-              ? "transito"
-              : "busqueda",
+          ? "transito"
+          : "busqueda",
       "usuarioRegistrante": nuevoCaso.usuarioRegistrante,
       "estado": "pendiente",
-      "distrito": nuevoCaso.distrito
+      "distrito": nuevoCaso.distrito,
       // "fechaBaja": nuevoCaso.fechaBaja,
       // "fechaResolucion": nuevoCaso.fechaResolucion,
     };
@@ -55,8 +57,9 @@ class RepositorioCasoImpl implements RepositorioCaso {
   @override
   Future<List<Caso>> todosLosCasosPendientes() async {
     try {
-      QuerySnapshot query =
-          await coleccionCasos.where("estado", isEqualTo: "pendiente").get();
+      QuerySnapshot query = await coleccionCasos
+          .where("estado", isEqualTo: "pendiente")
+          .get();
       if (query.docs.isNotEmpty) {
         return query.docs
             .map((doc) => Caso.fromMap(doc.data() as Map<String, dynamic>))
@@ -84,7 +87,10 @@ class RepositorioCasoImpl implements RepositorioCaso {
 
   @override
   void actualizarDatosCasos(
-      String atributoName, dynamic newData, String idCasoDocument) async {
+    String atributoName,
+    dynamic newData,
+    String idCasoDocument,
+  ) async {
     // Map<String,Map<String,dynamic>> atributos = {
     //   "direccion" : {"direccion" : newD}
     // };
@@ -150,5 +156,60 @@ class RepositorioCasoImpl implements RepositorioCaso {
       print("Error al buscar casos pendientes!");
       throw Exception("Error al buscar caso");
     }
+  }
+}
+*/
+
+// TODO: Reinstalar Firebase para usar RepositorioCasoImpl
+class RepositorioCasoImpl implements RepositorioCaso {
+  @override
+  void agregarCaso(Caso nuevoCaso) {
+    throw UnimplementedError();
+  }
+
+  @override
+  void actualizarDatosCasos(
+      String atributoName, dynamic newData, String idCasoDocument) {
+    throw UnimplementedError();
+  }
+
+  @override
+  void bajarCaso(int casoId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Caso> getCasoById(int casoId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> obtenerIDDocumento(String idCaso) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Caso>> todosLosAdopcionPendientes() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Caso>> todosLosCasos() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Caso>> todosLosCasosPendientes() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Caso>> todosLosCasosSeBusca() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Caso>> todosLosTransitosPendientes() {
+    throw UnimplementedError();
   }
 }
